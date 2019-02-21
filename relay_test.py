@@ -12,11 +12,10 @@ for pin in gpioList:
 
 try:
     while True:
-        for i in gpioList:
-            GPIO.output(i, GPIO.LOW)
-            time.sleep(t)
-            GPIO.output(i, GPIO.HIGH)
-            time.sleep(t)
+        GPIO.output(6, GPIO.LOW)
+        time.sleep(t)
+        GPIO.output(6, GPIO.HIGH)
+        time.sleep(t)
 
 except KeyboardInterrupt:
     print("Quitting...\n")
