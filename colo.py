@@ -1,5 +1,5 @@
 import time
-#import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 from multiprocessing.dummy import Pool as ThreadPool
 from functools import partial
 try:
@@ -170,7 +170,7 @@ def makeDrink(drinkName):
     pool.join()
 
     pumpAir()
-'''
+
 def setUpPumps():
     GPIO.setmode(GPIO.BCM)
 
@@ -178,7 +178,7 @@ def setUpPumps():
         GPIO.setup(pin, GPIO.IN)
         
 setUpPumps()
-'''
+
 def dispenseIngredient(ingredient, drinkName):
     pin = getPinFromIngredient(ingredient)
     activatePump(pin)
@@ -190,12 +190,12 @@ def getPumpTime(ingredient, drinkName):
     return drinkMap[drinkName]['ingredients'][ingredient]['amount'] * unitTime
 
 def activatePump(pin):
-    #GPIO.setup(pin, GPIO.OUT)
-    #GPIO.output(pin, GPIO.LOW)
+    GPIO.setup(pin, GPIO.OUT)
+    GPIO.output(pin, GPIO.LOW)
     print('Activating pin ' + str(pin) + '...')
 
 def disablePump(pin):
-    #GPIO.setup(pin, GPIO.IN)
+    GPIO.setup(pin, GPIO.IN)
     print('Disabling pin ' + str(pin) + '...')
 
 def getPinFromIngredient(ingredient):
