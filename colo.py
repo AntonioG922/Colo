@@ -165,10 +165,11 @@ def makeDrink(drinkName):
 
     pool.map(lambda x: dispenseIngredient(x, drinkName), ingredientList)
     
-    # close the pool and wait for the work to finish 
+    # Close the pool and wait for the work to finish 
     pool.close()
     pool.join()
 
+    # Clean out any liquid left in pipes
     pumpAir()
 
 def setUpPumps():
@@ -205,7 +206,7 @@ def pumpAir():
     for pump in airPumpList:
         activatePump(pump)
     
-    time.sleep(5)
+    time.sleep(10)
 
     for pump in airPumpList:
         disablePump(pump)
