@@ -8,13 +8,13 @@ t = 4          #Sleep Time
 
 for pin in gpioList:
     GPIO.setup(pin, GPIO.OUT)
-    GPIO.output(pin, GPIO.HIGH)
+    #GPIO.output(pin, GPIO.HIGH)
 
 try:
     while True:
-        GPIO.output(6, GPIO.LOW)
+        GPIO.output(19, GPIO.LOW)
         time.sleep(t)
-        GPIO.output(6, GPIO.HIGH)
+        GPIO.output(19, GPIO.HIGH)
         time.sleep(t)
 
 except KeyboardInterrupt:
