@@ -161,11 +161,6 @@ airPumpList = [26, 10]
 def makeDrink(drinkName):
     drink = drinkMap[drinkName]
 
-    # If drink doesn't exist, end
-    if not drink:
-        print("Drink not found")
-        return
-
     ingredientList = drink['ingredients']
     
     # Make the Pool of workers
@@ -219,8 +214,6 @@ def pumpAir():
     for pump in airPumpList:
         disablePump(pump)
 
-#def addDrink(drinkName):
-
 # Initialize Window and set background to black to reflect colo theme.
 window = Tk()
 window.configure(background = "black")
@@ -229,8 +222,8 @@ window.configure(background = "black")
 window.title("User Interface for colo")
 
 # Set windowsize to fit best for pi touchscreen.
-window.minsize(width=800, height=480)
-window.maxsize(width=800, height=480)
+window.minsize(width=800, height=400)
+window.maxsize(width=800, height=400)
 
 # Create frames to organize/separate between logo and prompt and drink option buttons.
 topFrame = Frame(window).pack()
