@@ -234,10 +234,10 @@ Label(topFrame, image = Logo, padx = 0, pady = 0, borderwidth = 0, highlightthic
 
 # Add buttons for drink options. Upon clicking,
 orangePhoto = PhotoImage(file = 'drinks/orange.png')
-Button(bottomFrame, image = orangePhoto, text = "Orange", command = partial(makeDrink, "Orange"), compound = "top").pack(padx = 80, side="left")
+Button(bottomFrame, image = orangePhoto, text = "Orange", command = partial(makeDrink, "orange"), compound = "top").pack(padx = 60, side="left")
 greenPhoto = PhotoImage(file = 'drinks/green.png')
-Button(bottomFrame, image = greenPhoto, text = "Green", command = partial(makeDrink, "Green"), compound = "top").pack(padx = 80, side="left")
+Button(bottomFrame, image = greenPhoto, text = "Green", command = partial(makeDrink, "green"), compound = "top").pack(padx = 60, side="left")
 purplePhoto = PhotoImage(file = 'drinks/purple.png')
-Button(bottomFrame, image = purplePhoto, text = "Purple", command = partial(makeDrink, "Purple"), compound = "top").pack(padx = 80, side="left")
+Button(bottomFrame, image = purplePhoto, text = "Purple", command = partial(makeDrink, "purple"), compound = "top").pack(padx = 60, side="left")
 
 window.mainloop()
