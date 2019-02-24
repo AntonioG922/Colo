@@ -42,13 +42,14 @@ unitMap = {
 # --------------------
 # Map of ingredients to GPIO pins (vials)
 ingredientMap = {
-    "tequila": 10,
+    "tequila": 5,
     "contreau": 9,
     "lime-juice": 11
 }
 
 # Rasp Pi GPIO ports connected to relay board for pumps
 gpioList = [10, 9, 11, 5, 6, 13, 19, 26]
+airPumpList = [26, 10]
 
 def makeDrink(drinkName):
     drink = drinkMap[drinkName]
@@ -69,11 +70,13 @@ def makeDrink(drinkName):
     pool.close()
     pool.join()
 
+    pumpAir()
+
 def setUpPumps():
     GPIO.setmode(GPIO.BCM)
 
     for pin in gpioList:
-        GPIO.setup(pin, GPIO.OUT)
+        GPIO.setup(pin, GPIO.IN)
         GPIO.output(pin, GPIO.HIGH)
         
 setUpPumps()
@@ -89,16 +92,25 @@ def getPumpTime(ingredient):
     return drinkMap['Margarita']['ingredients'][ingredient]['amount'] * unitTime
 
 def activatePump(pin):
+    GPIO.setup(pin, GPIO.OUT)
     GPIO.output(pin, GPIO.LOW)
     print('Activating pin ' + str(pin) + '...')
 
 def disablePump(pin):
-    GPIO.output(pin, GPIO.HIGH)
+    GPIO.setup(pin, GPIO.IN)
     print('Disabling pin ' + str(pin) + '...')
 
 def getPinFromIngredient(ingredient):
     return ingredientMap[ingredient]
 
+def pumpAir():
+    for pump in airPumpList:
+        activatePump(pump)
+    
+    time.sleep(5)
+
+    for pump in airPumpList:
+        disablePump(pump)
 
 #def addDrink(drinkName):
 
@@ -120,7 +132,7 @@ bottomFrame = Frame(window).pack(side="bottom")
 # Add colo Logo to Window Top Frame.
 Logo = PhotoImage(file = "colo_Logo.png")
 # Displaying colo Logo using a 'Label' by passing the 'picture' variable to 'image' parameter.
-logoIcon = Label(topFrame, image = Logo, padx = 0, pady = 0, borderwidth = 0, highlightthickness = 0).pack()
+Label(topFrame, image = Logo, padx = 0, pady = 0, borderwidth = 0, highlightthickness = 0).pack()
 
 # Add buttons for drink options. Upon clicking,
 for drink in drinkMap:
