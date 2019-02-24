@@ -75,11 +75,19 @@ drinkMap = {
     "purple": {
         "ingredients": {
             "red1": {
-                "amount": 2,
+                "amount": .5,
+                "unit" : "oz"
+            },
+            "red2": {
+                "amount": .5,
                 "unit" : "oz"
             },
             "blue1": {
-                "amount":1,
+                "amount":.25,
+                "unit": "oz"
+            },
+            "blue2": {
+                "amount":.75,
                 "unit": "oz"
             }
         },
