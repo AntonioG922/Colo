@@ -79,7 +79,6 @@ def setUpPumps():
 
     for pin in gpioList:
         GPIO.setup(pin, GPIO.IN)
-        GPIO.output(pin, GPIO.HIGH)
         
 setUpPumps()
 
