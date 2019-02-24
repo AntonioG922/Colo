@@ -223,7 +223,6 @@ window.title("User Interface for colo")
 
 # Set windowsize to fit best for pi touchscreen.
 window.minsize(width=800, height=400)
-window.maxsize(width=800, height=400)
 
 # Create frames to organize/separate between logo and prompt and drink option buttons.
 topFrame = Frame(window).pack()
