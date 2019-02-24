@@ -1,9 +1,11 @@
 import time
 import RPi.GPIO as GPIO
 from multiprocessing.dummy import Pool as ThreadPool
-from tkinter import Tk, Label, Button, Frame, PhotoImage
-from tkinter import messagebox
 from functools import partial
+try:
+    from Tkinter import Tk, Label, Button, Frame, PhotoImage
+except:
+    from tkinter import Tk, Label, Button, Frame, PhotoImage
 
 # Drink Map
 # ----------------------
