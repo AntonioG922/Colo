@@ -26,8 +26,8 @@ RESOLUTION = {'Full': (0, 0, 0),
 
 GPIO.output(MODE, RESOLUTION['Full'])
 
-step_count = SPR
-delay = .005/2
+step_count = SPR * 5
+delay = .005/5
 
 for x in range(step_count):
     GPIO.output(STEP, GPIO.HIGH)
