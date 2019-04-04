@@ -31,8 +31,8 @@ delay = .005 #initial delay
 
 for x in range(1,step_count):
     mod = x/15
-    if mod>200:
-        mod=200
+    if mod>150:
+        mod=150
     delay = 0.005/((mod+1)*4) # should start slow and ramp up speed
     GPIO.output(STEP, GPIO.HIGH)
     sleep(delay)
@@ -41,15 +41,15 @@ for x in range(1,step_count):
 
 sleep(.05)
 
-GPIO.output(DIR, CCW)
-for x in range(1,step_count):
-    mod = x/15
-    if mod>200:
-        mod=200
-    delay = 0.005/((mod+1)*4) # should start slow and ramp up speed
-    GPIO.output(STEP, GPIO.HIGH)
-    sleep(delay)
-    GPIO.output(STEP, GPIO.LOW)
-    sleep(delay)
+##GPIO.output(DIR, CCW)
+##for x in range(1,step_count):
+##    mod = x/15
+##    if mod>150:
+##        mod=150
+##    delay = 0.005/((mod+1)*4) # should start slow and ramp up speed
+##    GPIO.output(STEP, GPIO.HIGH)
+##    sleep(delay)
+##    GPIO.output(STEP, GPIO.LOW)
+##    sleep(delay)
 
 GPIO.cleanup()
