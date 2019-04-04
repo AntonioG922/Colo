@@ -33,7 +33,7 @@ for x in range(1,step_count):
     mod = x/15
     if mod>10:
         mod=10
-    delay = 0.005/(mod+1) # should start slow and ramp up speed
+    delay = 0.005/((mod+1)*4) # should start slow and ramp up speed
     GPIO.output(STEP, GPIO.HIGH)
     sleep(delay)
     GPIO.output(STEP, GPIO.LOW)
@@ -46,7 +46,7 @@ for x in range(1,step_count):
     mod = x/15
     if mod>10:
         mod=10
-    delay = 0.005/(mod+1) # should start slow and ramp up speed
+    delay = 0.005/((mod+1)*4) # should start slow and ramp up speed
     GPIO.output(STEP, GPIO.HIGH)
     sleep(delay)
     GPIO.output(STEP, GPIO.LOW)
