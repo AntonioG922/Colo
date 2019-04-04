@@ -24,9 +24,9 @@ RESOLUTION = {'Full': (0, 0, 0),
               '1/16': (0, 0, 1),
               '1/32': (1, 0, 1)}
 
-GPIO.output(MODE, RESOLUTION['Half'])
+GPIO.output(MODE, RESOLUTION['1/8'])
 
-step_count = SPR * 20 #400
+step_count = SPR * 50 #400
 delay = .005 #initial delay
 
 for x in range(1,step_count):
