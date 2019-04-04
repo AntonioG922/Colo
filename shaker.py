@@ -41,7 +41,8 @@ sleep(.01)
 
 GPIO.output(DIR, CCW)
 for x in range(1,step_count):
-    delay = 0.005/(x**(1/2)) # should start slow and ramp up speed
+    mod = x/10
+    delay = 0.005/(mod+1) # should start slow and ramp up speed
     GPIO.output(STEP, GPIO.HIGH)
     sleep(delay)
     GPIO.output(STEP, GPIO.LOW)
