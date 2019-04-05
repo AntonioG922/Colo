@@ -30,22 +30,22 @@ step_count = SPR * 5 #1000
 delay = .005 #initial delay
 
 for x in range(1,step_count):
-    mod = x/10
-    if mod>5:
-        mod=5
+    mod = x/25
+    if mod>10:
+        mod=10
     delay = 0.005/((mod+1)) # should start slow and ramp up speed
     GPIO.output(STEP, GPIO.HIGH)
     sleep(delay)
     GPIO.output(STEP, GPIO.LOW)
     sleep(delay)
 
-sleep(.1)
+sleep(.25)
 
 GPIO.output(DIR, CCW)
 for x in range(1,step_count):
-    mod = x/10
-    if mod>5:
-        mod=5
+    mod = x/25
+    if mod>10:
+        mod=10
     delay = 0.005/((mod+1)) # should start slow and ramp up speed
     GPIO.output(STEP, GPIO.HIGH)
     sleep(delay)
