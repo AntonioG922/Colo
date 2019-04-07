@@ -27,14 +27,14 @@ RESOLUTION = {'Full': (0, 0, 0),
 
 GPIO.output(MODE, RESOLUTION['Full'])
 
-step_count = SPR * 2 #2 rotations
+step_count = SPR * 2 #400 steps
 delay = .005 #initial delay
 
 for x in range(1,step_count):
-##    mod = x/25
-##    if mod>15:
-##        mod=15
-##    delay = 0.005/((mod+1)) # should start slow and ramp up speed
+    mod = x/50
+    if mod>4:
+        mod=4
+    delay = 0.005/((mod+1)) # should start slow and ramp up speed
     GPIO.output(STEP, GPIO.HIGH)
     sleep(delay)
     GPIO.output(STEP, GPIO.LOW)
