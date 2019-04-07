@@ -13,7 +13,8 @@ SPR = 200   # Steps per Revolution (360 / 1.8)
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(DIR, GPIO.OUT)
 GPIO.setup(STEP, GPIO.OUT)
-GPIO.output(DIR, CW)
+
+GPIO.output(DIR, CW) #sets rotations CW
 
 MODE = (14, 15, 18)   # Microstep Resolution GPIO Pins
 GPIO.setup(MODE, GPIO.OUT)
@@ -26,30 +27,19 @@ RESOLUTION = {'Full': (0, 0, 0),
 
 GPIO.output(MODE, RESOLUTION['Full'])
 
-step_count = SPR * 5 #1000
+step_count = SPR * 2 #2 rotations
 delay = .005 #initial delay
 
 for x in range(1,step_count):
-    mod = x/25
-    if mod>15:
-        mod=15
-    delay = 0.005/((mod+1)) # should start slow and ramp up speed
+##    mod = x/25
+##    if mod>15:
+##        mod=15
+##    delay = 0.005/((mod+1)) # should start slow and ramp up speed
     GPIO.output(STEP, GPIO.HIGH)
     sleep(delay)
     GPIO.output(STEP, GPIO.LOW)
     sleep(delay)
 
-sleep(.25)
 
-GPIO.output(DIR, CCW)
-for x in range(1,step_count):
-    mod = x/25
-    if mod>15:
-        mod=15
-    delay = 0.005/((mod+1)) # should start slow and ramp up speed
-    GPIO.output(STEP, GPIO.HIGH)
-    sleep(delay)
-    GPIO.output(STEP, GPIO.LOW)
-    sleep(delay)
 
 GPIO.cleanup()
