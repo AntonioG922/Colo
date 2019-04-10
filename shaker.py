@@ -31,6 +31,7 @@ step_count = SPR #200 steps
 delay = .005 #initial delay
 i=1
 while i<10:
+    GPIO.output(DIR, CW) #sets rotations CW
     for x in range(1,step_count):
         mod = x/20
         if mod>5:
