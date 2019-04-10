@@ -31,7 +31,20 @@ step_count = SPR * 2 #400 steps
 delay = .005 #initial delay
 
 for x in range(1,step_count):
-    mod = x/100
+    mod = x/50
+    if mod>1:
+        mod=1
+    delay = 0.005/((mod+1)) # should start slow and ramp up speed
+    GPIO.output(STEP, GPIO.HIGH)
+    sleep(delay)
+    GPIO.output(STEP, GPIO.LOW)
+    sleep(delay)
+
+sleep(0.01)
+
+GPIO.output(DIR, CCW) #sets rotations CCW
+for x in range(1,step_count):
+    mod = x/50
     if mod>1:
         mod=1
     delay = 0.005/((mod+1)) # should start slow and ramp up speed
