@@ -25,19 +25,19 @@ RESOLUTION = {'Full': (0, 0, 0),
               '1/16': (0, 0, 1),
               '1/32': (1, 0, 1)}
 
-GPIO.output(MODE, RESOLUTION['Full'])
+GPIO.output(MODE, RESOLUTION['Half'])
 
-step_count = SPR #200 steps
-delay = .005 #initial delay
+step_count = SPR*2 #400 steps
+
 i=1
 while i<10:
     GPIO.output(DIR, CW) #sets rotations CW
     for x in range(1,step_count):
         mod = x/20
-        if mod>5:
-            mod=11-mod
+        if mod>10:
+            mod=21-mod
             
-        delay = 0.01/((mod+1)) # should start slow and ramp up speed
+        delay = 0.005/((mod+1)) # should start slow and ramp up speed
         GPIO.output(STEP, GPIO.HIGH)
         sleep(delay)
         GPIO.output(STEP, GPIO.LOW)
@@ -48,10 +48,10 @@ while i<10:
     GPIO.output(DIR, CCW) #sets rotations CCW
     for x in range(1,step_count):
         mod = x/20
-        if mod>5:
-            mod=11-mod
+        if mod>10:
+            mod=21-mod
             
-        delay = 0.01/((mod+1)) # should start slow and ramp up speed
+        delay = 0.005/((mod+1)) # should start slow and ramp up speed
         GPIO.output(STEP, GPIO.HIGH)
         sleep(delay)
         GPIO.output(STEP, GPIO.LOW)
