@@ -32,12 +32,8 @@ delay = .005 #initial delay
 
 for x in range(1,step_count):
     mod = x/25
-    if mod>7:
-        mod=2
-    elif mod>6:
-        mod=3
-    elif mod>=5:
-        mod=4
+    if mod>5:
+        mod=9-mod
         
     delay = 0.005/((mod+1)) # should start slow and ramp up speed
     GPIO.output(STEP, GPIO.HIGH)
@@ -50,12 +46,8 @@ sleep(0.05)
 GPIO.output(DIR, CCW) #sets rotations CCW
 for x in range(1,step_count):
     mod = x/25
-    if mod>7:
-        mod=1
-    elif mod>6:
-        mod=2
-    elif mod>=5:
-        mod=3
+    if mod>5:
+        mod=9-mod
         
     delay = 0.005/(2*(mod+1)) # should start slow and ramp up speed
     GPIO.output(STEP, GPIO.HIGH)
