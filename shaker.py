@@ -46,8 +46,8 @@ sleep(0.05)
 GPIO.output(DIR, CCW) #sets rotations CCW
 for x in range(1,step_count):
     mod = x/25
-    if mod>5:
-        mod=9-mod
+    if mod>10:
+        mod=17-mod
         
     delay = 0.005/(2*(mod+1)) # should start slow and ramp up speed
     GPIO.output(STEP, GPIO.HIGH)
