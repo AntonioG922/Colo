@@ -31,9 +31,9 @@ step_count = SPR #200 steps
 delay = .005 #initial delay
 
 for x in range(1,step_count):
-    mod = x/30
-    if mod>3:
-        mod=7-mod
+    mod = x/20
+    if mod>5:
+        mod=11-mod
         
     delay = 0.01/((mod+1)) # should start slow and ramp up speed
     GPIO.output(STEP, GPIO.HIGH)
@@ -45,9 +45,9 @@ sleep(0.05)
 
 GPIO.output(DIR, CCW) #sets rotations CCW
 for x in range(1,step_count):
-    mod = x/30
-    if mod>3:
-        mod=7-mod
+    mod = x/20
+    if mod>5:
+        mod=11-mod
         
     delay = 0.01/((mod+1)) # should start slow and ramp up speed
     GPIO.output(STEP, GPIO.HIGH)
