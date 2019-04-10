@@ -49,7 +49,7 @@ sleep(0.01)
 
 GPIO.output(DIR, CCW) #sets rotations CCW
 for x in range(1,step_count):
-      mod = x/25
+    mod = x/25
     if mod>7:
         mod=2
     elif mod>6:
