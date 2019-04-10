@@ -45,7 +45,7 @@ for x in range(1,step_count):
     GPIO.output(STEP, GPIO.LOW)
     sleep(delay)
 
-sleep(0.01)
+sleep(0.05)
 
 GPIO.output(DIR, CCW) #sets rotations CCW
 for x in range(1,step_count):
