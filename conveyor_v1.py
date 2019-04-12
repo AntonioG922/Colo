@@ -30,7 +30,7 @@ GPIO.output(MODE, RESOLUTION['Full'])
 
 step_count = SPR*4
 
-delay = .005/16
+delay = .005/10
 
 def spin_CW():
     GPIO.output(DIR, CW)
