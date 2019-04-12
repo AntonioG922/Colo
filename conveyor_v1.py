@@ -41,6 +41,7 @@ def spin_CW():
         sleep(delay)
         if(GPIO.input(SWITCH)):
             print('switch triggered')
+            spin_CCW()
             break
             
 
@@ -52,13 +53,14 @@ def spin_CCW():
         sleep(delay)
         GPIO.output(STEP, GPIO.LOW)
         sleep(delay)
-        if(GPIO.input(SWITCH)): 
-            print('switch triggered')
-            break
+##        if(GPIO.input(SWITCH)): 
+##            print('switch triggered')
+##            break
             
+
 
 while True:
     spin_CW()
-    spin_CCW()
+    break
 
 GPIO.cleanup()
