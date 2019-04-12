@@ -53,9 +53,9 @@ def spin_CCW():
         sleep(delay)
         GPIO.output(STEP, GPIO.LOW)
         sleep(delay)
-##        if(GPIO.input(SWITCH)): 
-##            print('switch triggered')
-##            break
+        if(GPIO.input(SWITCH)): 
+            print('switch triggered')
+            break
             
 
 
@@ -64,3 +64,6 @@ while True:
     break
 
 GPIO.cleanup()
+
+except KeyboardInterrupt:
+    GPIO.cleanup()
