@@ -14,4 +14,4 @@ while True: # Setup a while loop to wait for a button press
         break
     else:
         print('0')
-    time.sleep(1)
+    sleep(1)
