@@ -59,6 +59,6 @@ def spin_CCW():
 
 while True:
     spin_CCW()
-    
+    break
 
 GPIO.cleanup()
