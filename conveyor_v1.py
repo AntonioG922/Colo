@@ -28,7 +28,7 @@ RESOLUTION = {'Full': (0, 0, 0),
 
 GPIO.output(MODE, RESOLUTION['Half'])
 
-step_count = SPR*2
+step_count = SPR*4
 
 delay = .005/2
 
@@ -39,9 +39,10 @@ def spin_CW():
         sleep(delay)
         GPIO.output(STEP, GPIO.LOW)
         sleep(delay)
-        if(GPIO.input(SWITCH)): # Setup an if loop to run a shutdown command when button press sensed
-            break
+        if(GPIO.input(SWITCH)):
             print('switch triggered')
+            break
+            
 
 
 def spin_CCW():
@@ -51,12 +52,13 @@ def spin_CCW():
         sleep(delay)
         GPIO.output(STEP, GPIO.LOW)
         sleep(delay)
-        if(GPIO.input(SWITCH)): # Setup an if loop to run a shutdown command when button press sensed
-            break
+        if(GPIO.input(SWITCH)): 
             print('switch triggered')
+            break
+            
 
 while True:
-    spin_CW()
+    spin_CCW()
     
 
 GPIO.cleanup()
