@@ -39,7 +39,7 @@ def spin_CW():
         sleep(delay)
         GPIO.output(STEP, GPIO.LOW)
         sleep(delay)
-        if(GPIO.input(15)): # Setup an if loop to run a shutdown command when button press sensed
+        if(GPIO.input(SWITCH)): # Setup an if loop to run a shutdown command when button press sensed
             break
             print('switch triggered')
 
@@ -51,7 +51,7 @@ def spin_CCW():
         sleep(delay)
         GPIO.output(STEP, GPIO.LOW)
         sleep(delay)
-        if(GPIO.input(15)): # Setup an if loop to run a shutdown command when button press sensed
+        if(GPIO.input(SWITCH)): # Setup an if loop to run a shutdown command when button press sensed
             break
             print('switch triggered')
 
