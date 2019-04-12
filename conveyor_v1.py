@@ -6,6 +6,8 @@ import RPi.GPIO as GPIO
 
 DIR = 20   # Direction GPIO Pin
 STEP = 21  # Step GPIO Pin
+SWITCH = 23 # Switch GPIO Pin
+
 CW = 1     # Clockwise Rotation
 CCW = 0    # Counterclockwise Rotation
 SPR = 200   # Steps per Revolution (360 / 1.8)
@@ -13,7 +15,7 @@ SPR = 200   # Steps per Revolution (360 / 1.8)
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(DIR, GPIO.OUT)
 GPIO.setup(STEP, GPIO.OUT)
-GPIO.output(DIR, CW)
+GPIO.setup(SWITCH, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) #pin 23 
 
 MODE = (14, 15, 18)   # Microstep Resolution GPIO Pins
 GPIO.setup(MODE, GPIO.OUT)
@@ -24,24 +26,37 @@ RESOLUTION = {'Full': (0, 0, 0),
               '1/16': (0, 0, 1),
               '1/32': (1, 0, 1)}
 
-GPIO.output(MODE, RESOLUTION['Full'])
+GPIO.output(MODE, RESOLUTION['Half'])
 
-step_count = SPR
+step_count = SPR*2
+
 delay = .005/2
 
-for x in range(step_count):
-    GPIO.output(STEP, GPIO.HIGH)
-    sleep(delay)
-    GPIO.output(STEP, GPIO.LOW)
-    sleep(delay)
+def spin_CW():
+    GPIO.output(DIR, CW)
+    for x in range(step_count):
+        GPIO.output(STEP, GPIO.HIGH)
+        sleep(delay)
+        GPIO.output(STEP, GPIO.LOW)
+        sleep(delay)
+        if(GPIO.input(15)): # Setup an if loop to run a shutdown command when button press sensed
+            break
+            print('switch triggered')
 
-sleep(.5)
 
-GPIO.output(DIR, CCW)
-for x in range(step_count):
-    GPIO.output(STEP, GPIO.HIGH)
-    sleep(delay)
-    GPIO.output(STEP, GPIO.LOW)
-    sleep(delay)
+def spin_CCW():
+    GPIO.output(DIR, CCW)
+    for x in range(step_count):
+        GPIO.output(STEP, GPIO.HIGH)
+        sleep(delay)
+        GPIO.output(STEP, GPIO.LOW)
+        sleep(delay)
+        if(GPIO.input(15)): # Setup an if loop to run a shutdown command when button press sensed
+            break
+            print('switch triggered')
+
+while True:
+    spin_CW()
+    
 
 GPIO.cleanup()
