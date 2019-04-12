@@ -1,5 +1,5 @@
 # Colo Shaker
-# Updated 4/3/19
+# Updated 4/10/19
 
 from time import sleep
 import RPi.GPIO as GPIO
