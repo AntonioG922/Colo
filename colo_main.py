@@ -456,10 +456,10 @@ def move_conveyor_cups():
             break
 
 #------------------------------------Clean-up----------------------------------
-GPIO.cleanup()
 try:
     reset_conveyor()
     print(conv_dist)
+    GPIO.cleanup()
 
 except KeyboardInterrupt:
     GPIO.cleanup()
