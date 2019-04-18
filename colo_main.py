@@ -102,7 +102,7 @@ def reset_shaker():
 
     shak_res_delay = 0.01
     
-    for x in range(round(shak_reset_steps*0.5)): #find right bound
+    for x in range(int(round(shak_reset_steps*0.5))): #find right bound
         GPIO.output(DIR_s, CW)
         GPIO.output(STEP_s, GPIO.HIGH)
         sleep(shak_res_delay)
