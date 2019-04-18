@@ -28,14 +28,14 @@ setUpPumps()
 # Conveyor (indicated by _c)
 DIR_c = 23
 STEP_c = 24
-MODE_c = (14,15,18)
+MODE_c = (18,15,14)
 LSwitch_c = 25
 
 
 # Shake (_s)
 DIR_s = 2
 STEP_s = 3
-MODE_s = (17,27,22)
+MODE_s = (22,27,17)
 LSwitch_s = 4
 
 # Modes
@@ -267,15 +267,15 @@ def pumpAir():
 
 #--------------------------------------Shake---------------------------------------
 def shakeDrink():
-    GPIO.output(MODE_s, RESOLUTION['Full']) # make sure everything else changes 
+    GPIO.output(MODE_s, RESOLUTION['Half']) # make sure everything else changes 
     
-    shake_steps = round(200*0.3) #60 full steps: doubled because of half step
+    shake_steps = round(200*0.3)*2 #60 full steps: doubled because of half step
 
     
     # initial shake since it starts at the top
     GPIO.output(DIR_s, CW) #sets rotations CW
     for x in range(1,int(shake_steps)):
-        mod,rem = divmod(x,10) #every twenty steps increase speed
+        mod,rem = divmod(x,20) #every twenty steps increase speed
         if mod>3:
             mod=7-mod
             
@@ -292,7 +292,7 @@ def shakeDrink():
     while shakes<9: #shake 10 times
         GPIO.output(DIR_s, CCW) #sets rotations CW
         for x in range(1,int(shake_steps*2)): #120 steps: goes from +108 to -108
-            mod,rem = divmod(x,10)
+            mod,rem = divmod(x,20)
             if mod>6:
                 mod=13-mod
                 
