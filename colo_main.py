@@ -75,12 +75,12 @@ APS = 1.8 #angle per full step in degrees
 #----------------------Resetting mechanical components----------------------
 
 def reset_conveyor():
-    conv_reset_steps = SPR*60*2 #doubled for half-step
+    conv_reset_steps = SPR*60 #doubled for half-step
     
-    GPIO.output(MODE_c, RESOLUTION['Half']) #changes to half-step
+    GPIO.output(MODE_c, RESOLUTION['Full']) #changes to half-step
     GPIO.output(DIR_c, CW)
 
-    conv_res_delay = 0.005/5
+    conv_res_delay = 0.005/8
     
     for x in range(conv_reset_steps):
         GPIO.output(STEP_c, GPIO.HIGH)
@@ -89,6 +89,7 @@ def reset_conveyor():
         sleep(conv_res_delay)
         if(GPIO.input(LSwitch_c)): 
             conv_dist = 0 #zeroes the conveyor distance
+            return conv_dist
             break
 
 
@@ -110,6 +111,7 @@ def reset_shaker():
         if(GPIO.input(LSwitch_s)): 
             shak_ang = 0 #zeroes the conveyor distance
             # limit switches should be set -120 and 120 degrees from top
+            return shak_ang
             break
 
     sleep(1.5)
@@ -457,7 +459,7 @@ def move_conveyor_cups():
 
 #------------------------------------Clean-up----------------------------------
 try:
-    reset_conveyor()
+    conv_dist = reset_conveyor()
     print(conv_dist)
     GPIO.cleanup()
 
