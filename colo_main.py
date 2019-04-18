@@ -91,8 +91,6 @@ def reset_conveyor():
             conv_dist = 0 #zeroes the conveyor distance
             break
 
-reset_conveyor()
-print(conv_dist)
 
 def reset_shaker():
 
@@ -459,6 +457,9 @@ def move_conveyor_cups():
 
 #------------------------------------Clean-up----------------------------------
 GPIO.cleanup()
+try:
+    reset_conveyor()
+    print(conv_dist)
 
 except KeyboardInterrupt:
     GPIO.cleanup()
