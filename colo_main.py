@@ -102,7 +102,7 @@ def reset_shaker():
 
     shak_res_delay = 0.005
     
-    for x in range(int(round(shak_reset_steps)*1000)): #find right bound
+    for x in range(int(round(shak_reset_steps))): #find right bound
         GPIO.output(DIR_s, CCW)
         GPIO.output(STEP_s, GPIO.HIGH)
         sleep(shak_res_delay)
@@ -301,8 +301,6 @@ def shakeDrink():
             sleep(delay)
             GPIO.output(STEP_s, GPIO.LOW)
             sleep(delay)
-
-        sleep(0.5)
 
         GPIO.output(DIR_s, CW) #sets rotations CCW
         for x in range(1,int(shake_steps*2)): #120 steps: goes from -108 to +108
