@@ -269,7 +269,7 @@ def pumpAir():
 def shakeDrink():
     GPIO.output(MODE_s, RESOLUTION['Half']) # make sure everything else changes 
     
-    shake_steps = round(200*0.3)*2 #120 steps: doubled because of half step
+    shake_steps = round(200*0.6)*2 #120 steps: doubled because of half step
 
     
     # initial shake since it starts at the top
