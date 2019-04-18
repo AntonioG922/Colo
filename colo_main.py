@@ -269,15 +269,15 @@ def pumpAir():
 def shakeDrink():
     GPIO.output(MODE_s, RESOLUTION['Half']) # make sure everything else changes 
     
-    shake_steps = round(200*0.6)*2 #240 half steps: doubled because of half step
+    shake_steps = round(200)*2 #400 half steps: doubled because of half step
 
     
     # initial shake since it starts at the top
     GPIO.output(DIR_s, CW) #sets rotations CW
     for x in range(1,int(shake_steps)):
-        mod,rem = divmod(x,20) #every twenty steps increase speed
-        if mod>6:
-            mod=13-mod
+        mod,rem = divmod(x,40) #every twenty steps increase speed
+        if mod>5:
+            mod=11-mod
             
         delay = 0.01/((mod+1)) # should start slow and ramp up speed
         GPIO.output(STEP_s, GPIO.HIGH)
@@ -288,7 +288,7 @@ def shakeDrink():
     sleep(0.5)
 
     shakes = 1
-    
+    '''
     while shakes<9: #shake 10 times
         GPIO.output(DIR_s, CCW) #sets rotations CW
         for x in range(1,int(shake_steps*2)): #480 steps: goes from +108 to -108
@@ -329,7 +329,7 @@ def shakeDrink():
         sleep(delay)
         GPIO.output(STEP_s, GPIO.LOW)
         sleep(delay)
-
+    '''
 #-------------------------------------Conveyor-------------------------------------        
 
 def move_conveyor_shots():
