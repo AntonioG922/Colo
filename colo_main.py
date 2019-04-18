@@ -176,7 +176,7 @@ drinkMap = {
             }
         },
         "serve": "shaken"
-    }
+    },
     "Kamikaze": {
         "ingredients": {
             "vodka": {
