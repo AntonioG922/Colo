@@ -95,14 +95,14 @@ def reset_conveyor():
 
 def reset_shaker():
 
-    shak_reset_steps = SPR*0.833*2 #doubled for half-step
+    shak_reset_steps = SPR*0.5*2 #doubled for half-step
 
     GPIO.output(MODE_s, RESOLUTION['Half']) #changes to half-step
     
 
     shak_res_delay = 0.01
     
-    for x in range(shak_reset_steps): #find right bound
+    for x in range(round(shak_reset_steps*0.5)): #find right bound
         GPIO.output(DIR_s, CW)
         GPIO.output(STEP_s, GPIO.HIGH)
         sleep(shak_res_delay)
@@ -110,7 +110,6 @@ def reset_shaker():
         sleep(shak_res_delay)
         if(GPIO.input(LSwitch_s)): 
             shak_ang = 0 #zeroes the conveyor distance
-            # limit switches should be set -120 and 120 degrees from top
             return shak_ang
             break
 
@@ -459,7 +458,7 @@ def move_conveyor_cups():
 
 #------------------------------------Clean-up----------------------------------
 try:
-    conv_dist = reset_conveyor()
+    shak_ang = reset_shaker()
     print(conv_dist)
     GPIO.cleanup()
 
