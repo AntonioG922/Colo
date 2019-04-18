@@ -103,7 +103,7 @@ def reset_shaker():
     shak_res_delay = 0.005
     
     for x in range(int(round(shak_reset_steps)*1000)): #find right bound
-        GPIO.output(DIR_s, CW)
+        GPIO.output(DIR_s, CCW)
         GPIO.output(STEP_s, GPIO.HIGH)
         sleep(shak_res_delay)
         GPIO.output(STEP_s, GPIO.LOW)
@@ -460,6 +460,7 @@ def move_conveyor_cups():
 try:
     shak_ang = reset_shaker()
     print(shak_ang)
+    shakeDrink()
     GPIO.cleanup()
 
 except KeyboardInterrupt:
