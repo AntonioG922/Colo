@@ -25,18 +25,18 @@ def setUpPumps():
 
 setUpPumps()
 
-# Shaker (indicated by _s)
-DIR_s = 23
-STEP_s = 24
-MODE_s = (14,15,18)
-LSwitch_left_s = 6
-LSwitch_right_s = 7
+# Conveyor (indicated by _c)
+DIR_c = 23
+STEP_c = 24
+MODE_c = (14,15,18)
+LSwitch_c = 25
 
-# Conveyor
-DIR_c = 2
-STEP_c = 3
-MODE_c = (17,27,22)
-LSwitch_c = 4
+
+# Shake (_s)
+DIR_s = 2
+STEP_s = 3
+MODE_s = (17,27,22)
+LSwitch_s = 4
 
 # Modes
 RESOLUTION = {'Full': (0, 0, 0),
@@ -91,7 +91,11 @@ def reset_conveyor():
             conv_dist = 0 #zeroes the conveyor distance
             break
 
+reset_conveyor()
+print(conv_dist)
+
 def reset_shaker():
+
     shak_reset_steps = SPR*0.833*2 #doubled for half-step
 
     GPIO.output(MODE_s, RESOLUTION['Half']) #changes to half-step
@@ -105,24 +109,13 @@ def reset_shaker():
         sleep(shak_res_delay)
         GPIO.output(STEP_s, GPIO.LOW)
         sleep(shak_res_delay)
-        if(GPIO.input(LSwitch_right_s)): 
-            shak_ang = 120 #zeroes the conveyor distance
+        if(GPIO.input(LSwitch_s)): 
+            shak_ang = 0 #zeroes the conveyor distance
             # limit switches should be set -120 and 120 degrees from top
             break
 
     sleep(1.5)
     
-    steps_to_top = round(0.333*200)*2 #120 degrees to the top times two for half step
-    for x in range(shak_reset_steps): #come to top center
-        GPIO.output(DIR_s, CCW)
-        GPIO.output(STEP_s, GPIO.HIGH)
-        sleep(shak_res_delay)
-        GPIO.output(STEP_s, GPIO.LOW)
-        sleep(shak_res_delay)
-        shak_ang-= APS*0.5 #halfed for half step
-        if shak_ang<=0:
-            shak_ang = 0
-            break
 
 #------------------------------Drink Map-------------------------------
 # Contains a mapping for each drink to its  1) Ingredients
@@ -441,7 +434,7 @@ def move_conveyor_cups():
         if conv_dist>=cup2_dist:
             #activatePump(number of final pump pin)
             #activatePump(number of final pump pin)
-            sleep(60)
+            sleep(30)
             #disablePump(number of final pump pin)
             #disablePump(number of final pump pin)
             break
@@ -459,10 +452,11 @@ def move_conveyor_cups():
         if conv_dist<=10:
             #activatePump(number of final pump pin)
             #activatePump(number of final pump pin)
-            sleep(60)
+            sleep(30)
             #disablePump(number of final pump pin)
             #disablePump(number of final pump pin)
             break
+
 #------------------------------------Clean-up----------------------------------
 GPIO.cleanup()
 
