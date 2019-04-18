@@ -275,7 +275,7 @@ def shakeDrink():
     # initial shake since it starts at the top
     GPIO.output(DIR_s, CW) #sets rotations CW
     for x in range(1,int(shake_steps)):
-        mod,rem = divmod(x,40) #every twenty steps increase speed
+        mod,rem = divmod(x,20) #every twenty steps increase speed
         if mod>5:
             mod=11-mod
             
