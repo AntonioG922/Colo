@@ -269,15 +269,15 @@ def pumpAir():
 def shakeDrink():
     GPIO.output(MODE_s, RESOLUTION['Half']) # make sure everything else changes 
     
-    shake_steps = round(200*0.3)*2 #60 full steps: doubled because of half step
+    shake_steps = round(200*0.41)*2 #164 half steps: doubled because of half step
 
     
     # initial shake since it starts at the top
     GPIO.output(DIR_s, CW) #sets rotations CW
     for x in range(1,int(shake_steps)):
         mod,rem = divmod(x,20) #every twenty steps increase speed
-        if mod>3:
-            mod=7-mod
+        if mod>8:
+            mod=9-mod
             
         delay = 0.01/((mod+1)) # should start slow and ramp up speed
         GPIO.output(STEP_s, GPIO.HIGH)
@@ -285,16 +285,15 @@ def shakeDrink():
         GPIO.output(STEP_s, GPIO.LOW)
         sleep(delay)
     
-    sleep(0.5)
 
     shakes = 1
     
     while shakes<9: #shake 10 times
         GPIO.output(DIR_s, CCW) #sets rotations CW
-        for x in range(1,int(shake_steps*2)): #120 steps: goes from +108 to -108
+        for x in range(1,int(shake_steps*2)): #328 steps: goes from +108 to -108
             mod,rem = divmod(x,20)
-            if mod>6:
-                mod=13-mod
+            if mod>8:
+                mod=17-mod
                 
             delay = 0.01/((mod+1)) # should start slow and ramp up speed
             GPIO.output(STEP_s, GPIO.HIGH)
@@ -305,8 +304,8 @@ def shakeDrink():
         GPIO.output(DIR_s, CW) #sets rotations CCW
         for x in range(1,int(shake_steps*2)): #120 steps: goes from -108 to +108
             mod,rem = divmod(x,20)
-            if mod>6:
-                mod=13-mod
+            if mod>8:
+                mod=17-mod
                 
             delay = 0.01/((mod+1)) # should start slow and ramp up speed
             GPIO.output(STEP_s, GPIO.HIGH)
@@ -316,11 +315,13 @@ def shakeDrink():
 
         shakes+=1
 
+    sleep(0.5)
+    
     GPIO.output(DIR_s, CCW) #sets rotations CW
     for x in range(1,int(shake_steps)): #60 steps: goes from +108 to 0
         mod,rem = divmod(x,20)
-        if mod>3:
-            mod=7-mod
+        if mod>4:
+            mod=9-mod
             
         delay = 0.01/((mod+1)) # should start slow and ramp up speed
         GPIO.output(STEP_s, GPIO.HIGH)
