@@ -1,7 +1,7 @@
 # Colo Main
 # Updated 4/15/19
 
-import time
+from time import *
 import RPi.GPIO as GPIO
 from multiprocessing.dummy import Pool as ThreadPool
 from functools import partial
