@@ -459,7 +459,7 @@ def move_conveyor_cups():
 #------------------------------------Clean-up----------------------------------
 try:
     shak_ang = reset_shaker()
-    print(conv_dist)
+    print(shak_ang)
     GPIO.cleanup()
 
 except KeyboardInterrupt:
