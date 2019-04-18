@@ -51,7 +51,7 @@ RESOLUTION = {'Full': (0, 0, 0),
 GPIO.setup(DIR_s, GPIO.OUT)
 GPIO.setup(STEP_s, GPIO.OUT)
 GPIO.setup(MODE_s, GPIO.OUT)
-GPIO.setup(LSwitch_1_s, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(LSwitch_s, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 GPIO.setup(DIR_c, GPIO.OUT)
 GPIO.setup(STEP_c, GPIO.OUT)
