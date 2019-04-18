@@ -101,15 +101,30 @@ def reset_shaker():
     
 
     shak_res_delay = 0.005
+
+    #assuming it shouldn't be more than a qtr turn from 0
     
-    for x in range(int(round(shak_reset_steps))): #find right bound
+    for x in range(int(round(shak_reset_steps*0.25))): #qtr turn CCW
         GPIO.output(DIR_s, CCW)
         GPIO.output(STEP_s, GPIO.HIGH)
         sleep(shak_res_delay)
         GPIO.output(STEP_s, GPIO.LOW)
         sleep(shak_res_delay)
         if(GPIO.input(LSwitch_s)): 
-            shak_ang = 0 #zeroes the conveyor distance
+            shak_ang = 0 #zeroes the shaker angle
+            return shak_ang
+            break
+
+    sleep(1.5)
+    
+    for x in range(int(round(shak_reset_steps*0.5))): #half turn CW
+        GPIO.output(DIR_s, CW)
+        GPIO.output(STEP_s, GPIO.HIGH)
+        sleep(shak_res_delay)
+        GPIO.output(STEP_s, GPIO.LOW)
+        sleep(shak_res_delay)
+        if(GPIO.input(LSwitch_s)): 
+            shak_ang = 0 #zeroes the shaker angle
             return shak_ang
             break
 
@@ -288,7 +303,7 @@ def shakeDrink():
 
     shakes = 1
     
-    while shakes<9: #shake 10 times
+    while shakes<9: #shake 10 times counting first and last moves
         GPIO.output(DIR_s, CCW) #sets rotations CW
         for x in range(1,int(shake_steps*2)): #328 steps: goes from +108 to -108
             mod,rem = divmod(x,20)
@@ -302,7 +317,7 @@ def shakeDrink():
             sleep(delay)
 
         GPIO.output(DIR_s, CW) #sets rotations CCW
-        for x in range(1,int(shake_steps*2)): #120 steps: goes from -108 to +108
+        for x in range(1,int(shake_steps*2)): #328 steps: goes from -108 to +108
             mod,rem = divmod(x,20)
             if mod>8:
                 mod=17-mod
@@ -318,8 +333,8 @@ def shakeDrink():
     sleep(0.5)
     
     GPIO.output(DIR_s, CCW) #sets rotations CW
-    for x in range(1,int(shake_steps)): #60 steps: goes from +108 to 0
-        mod,rem = divmod(x,20)
+    for x in range(1,int(shake_steps*2)): #328 steps: goes slower until it hits the zero switch
+        mod,rem = divmod(x,40)
         if mod>4:
             mod=9-mod
             
@@ -328,6 +343,10 @@ def shakeDrink():
         sleep(delay)
         GPIO.output(STEP_s, GPIO.LOW)
         sleep(delay)
+        if(GPIO.input(LSwitch_s)): 
+            shak_ang = 0 #zeroes the conveyor distance
+            return shak_ang
+            break
     
 #-------------------------------------Conveyor-------------------------------------        
 
