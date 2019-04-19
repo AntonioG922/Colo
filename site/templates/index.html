@@ -12,7 +12,7 @@
 
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
@@ -35,13 +35,13 @@
                     <div class="col-6">
                         <div class="drink text-center" data-toggle="modal" data-target="#drinkDisplay" data-backdrop="static">
                             <img class="pb-2" src="https://images.cocktailflow.com/v1/cocktail/w_300,h_540/cocktail_blue_kamikaze-1.png" height="200">
-                            <h5>Green</h5>
+                            <h5>Blue Kamikaze</h5>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="drink text-center" data-toggle="modal" data-target="#drinkDisplay" data-backdrop="static">
                             <img class="pb-2" src="https://alchetron.com/cdn/kamikaze-cocktail-b4c7f758-20d0-4101-abfc-6382fffff72-resize-750.png" height="200">
-                            <h5>Purple</h5>
+                            <h5>Shot-a-kaze</h5>
                         </div>
                     </div>
                 </div>
@@ -90,34 +90,34 @@
                         <div class="row mb-2">
                             <div class="col-1"></div>
                             <div class="col-1 text-center mt-2">1</div>
-                            <div class="col-4"><input type="text" class="form-control" placeholder="Ingredient"></div>
+                            <div class="col-4"><input id="vial1Input" type="text" class="form-control" placeholder="Ingredient"></div>
                             <div class="col-1 text-right mt-2">2</div>
-                            <div class="col-4"><input type="text" class="form-control" placeholder="Ingredient"></div>
+                            <div class="col-4"><input id="vial2Input" type="text" class="form-control" placeholder="Ingredient"></div>
                         </div>
                         <div class="row mb-2">
                             <div class="col-1"></div>
                             <div class="col-1 text-center mt-2">3</div>
-                            <div class="col-4"><input type="text" class="form-control" placeholder="Ingredient"></div>
+                            <div class="col-4"><input id="vial3Input" type="text" class="form-control" placeholder="Ingredient"></div>
                             <div class="col-1 text-right mt-2">4</div>
-                            <div class="col-4"><input type="text" class="form-control" placeholder="Ingredient"></div>
+                            <div class="col-4"><input id="vial4Input" type="text" class="form-control" placeholder="Ingredient"></div>
                         </div>
                         <div class="row mb-2">
                             <div class="col-1"></div>
                             <div class="col-1 text-center mt-2">5</div>
-                            <div class="col-4"><input type="text" class="form-control" placeholder="Ingredient"></div>
+                            <div class="col-4"><input id="vial5Input" type="text" class="form-control" placeholder="Ingredient"></div>
                             <div class="col-1 text-right mt-2">6</div>
-                            <div class="col-4"><input type="text" class="form-control" placeholder="Ingredient"></div>
+                            <div class="col-4"><input id="vial6Input" type="text" class="form-control" placeholder="Ingredient"></div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-outline-success">Save</button>
+                        <button id="saveSettingsBtn" type="button" class="btn btn-outline-success">Save</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="modal fade" id="addDrinkModal" tabindex="-1" role="dialog">
+        <div id="addDrinkModal" class="modal fade" tabindex="-1">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -147,7 +147,7 @@
                                     <input type="number" class="form-control" id="drinkAmount1Input" placeholder="#">
                                 </div>
                                 <div class="col-3">
-                                    <select id="inputIngredient1Unit" class="form-control">
+                                    <select id="drinkUnit1Input" class="form-control">
                                         <option selected>Oz</option>
                                     </select>
                                 </div>
@@ -159,10 +159,10 @@
                                     <input type="text" class="form-control" id="drinkIngredient2Input" placeholder="Ingredient 2">
                                 </div>
                                 <div class="col-2 px-2">
-                                    <input type="number" class="form-control" id="drinkAmount1Input" placeholder="#">
+                                    <input type="number" class="form-control" id="drinkAmount2Input" placeholder="#">
                                 </div>
                                 <div class="col-3">
-                                    <select id="inputIngredient2Unit" class="form-control">
+                                    <select id="drinkUnit2Input" class="form-control">
                                         <option selected>Oz</option>
                                     </select>
                                 </div>
@@ -174,10 +174,10 @@
                                     <input type="text" class="form-control" id="drinkIngredient3Input" placeholder="Ingredient 3">
                                 </div>
                                 <div class="col-2 px-2">
-                                    <input type="number" class="form-control" id="drinkAmount1Input" placeholder="#">
+                                    <input type="number" class="form-control" id="drinkAmount3Input" placeholder="#">
                                 </div>
                                 <div class="col-3">
-                                    <select id="inputInrgedient3Unit" class="form-control">
+                                    <select id="drinkUnit3Input" class="form-control">
                                         <option selected>Oz</option>
                                     </select>
                                 </div>
@@ -187,7 +187,7 @@
                                     Served
                                 </div>
                                 <div class="col-6">
-                                    <select id="inputInrgedient3Unit" class="form-control">
+                                    <select id="drinkServedInput" class="form-control">
                                         <option selected>Shaken</option>
                                         <option selected>Stirred</option>
                                     </select>
@@ -197,7 +197,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-outline-success">Add Drink</button>
+                        <button id="addDrinkBtn" type="button" class="btn btn-outline-success">Add Drink</button>
                     </div>
                 </div>
             </div>
