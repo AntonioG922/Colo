@@ -51,48 +51,37 @@ function sendDrinkOrder(drink, strength) {
 }
 
 function updateVials() {
-    vials = {
-        vial1: $('#vial1Input').val(),
-        vial2: $('#vial2Input').val(),
-        vial3: $('#vial3Input').val(),
-        vial4: $('#vial4Input').val(),
-        vial5: $('#vial5Input').val(),
-        vial6: $('#vial6Input').val()
-    }
+    vial1 = $('#vial1Input').val(),
+    vial2 = $('#vial2Input').val(),
+    vial3 = $('#vial3Input').val(),
+    vial4 = $('#vial4Input').val(),
+    vial5 = $('#vial5Input').val(),
+    vial6 = $('#vial6Input').val()
     
     $.ajax({
-        url: '/api/updateVials',
-        data: vials
+        url: '/api/updateVials/' + vial1 + '/' + vial2 + '/' + vial3 + '/' + vial4 + '/' + vial5 + '/' + vial6
     }).done(function(data) {
         alert('Vials Updated!');
     });
 }
 
 function addDrink() {
-    ingredients = {};
-    ingredients[$('#drinkIngredient1Input').val()] = {
-        amount: $('#drinkAmount1Input').val(),
-        unit: $('#drinkUnit1Input').val().toLowerCase()
-    };
-    ingredients[$('#drinkIngredient2Input').val()] = {
-        amount: $('#drinkAmount2Input').val(),
-        unit: $('#drinkUnit2Input').val().toLowerCase()
-    };
-    ingredients[$('#drinkIngredient3Input').val()] = {
-        amount: $('#drinkAmount3Input').val(),
-        unit: $('#drinkUnit3Input').val().toLowerCase()
-    };
-    
-    drink = {
-        name: $('#drinkNameInput').val(),
-        ingredients: ingredients,
-        served: $('#drinkServedInput').val().toLowerCase()
-    }
-    
-    
+    name = $('#drinkNameInput').val();
+
+    ingrdnt1 = $('#drinkIngredient1Input').val();
+    ingrdnt1Amount =  $('#drinkAmount1Input').val();
+    ingrdnt1Unit = $('#drinkUnit1Input').val().toLowerCase();
+    ingrdnt2 = $('#drinkIngredient2Input').val();
+    ingrdnt2Amount =  $('#drinkAmount2Input').val();
+    ingrdnt2Unit = $('#drinkUnit2Input').val().toLowerCase();
+    ingrdnt3 = $('#drinkIngredient3Input').val();
+    ingrdnt3Amount =  $('#drinkAmount3Input').val();
+    ingrdnt3Unit = $('#drinkUnit3Input').val().toLowerCase();
+
+    served = $('#drinkServedInput').val().toLowerCase();
+
     $.ajax({
-        url: '/api/addDrink',
-        data: drink
+        url: '/api/addDrink/' + name + '/' + ingrdnt1 + '/' + ingrdnt1Amount + '/' + ingrdnt1Unit + '/' + ingrdnt2 + '/' + ingrdnt2Amount + '/' + ingrdnt2Unit + '/' + ingrdnt3 + '/' + ingrdnt3Amount + '/' + ingrdnt3Unit + '/' + served,
     }).done(function(data) {
         alert('Drink Added!');
     });
