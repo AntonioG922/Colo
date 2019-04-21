@@ -92,7 +92,7 @@ function addDrink() {
     }
 
     $.ajax({
-        url: '/api/addDrink/' + name + '/' + ingrdnt1 + '/' + ingrdnt1Amount + '/' + ingrdnt1Unit + '/' + ingrdnt2 + '/' + ingrdnt2Amount + '/' + ingrdnt2Unit + '/' + ingrdnt3 + '/' + ingrdnt3Amount + '/' + ingrdnt3Unit + '/' + served,
+        url: '/api/addDrink/' + name + '/' + ingrdnt1 + '/' + ingrdnt1Amount + '/' + ingrdnt1Unit + '/' + ingrdnt2 + '/' + ingrdnt2Amount + '/' + ingrdnt2Unit + '/' + (ingrdnt3 ? ingrdnt3 + '/' + ingrdnt3Amount + '/' + ingrdnt3Unit + '/' : '') + served,
     }).done(function(data) {
         $('#modal').modal('toggle');
         showStatus(name + ' Added');
