@@ -27,7 +27,7 @@ def update_vials(vial1, vial2, vial3, vial4, vial5, vial6):
 # See above chaining comment
 @app.route('/api/addDrink/<name>/<ingrdnt1>/<ingrdnt1Amount>/<ingrdnt1Unit>/<ingrdnt2>/<ingrdnt2Amount>/<ingrdnt2Unit>/<served>')
 @app.route('/api/addDrink/<name>/<ingrdnt1>/<ingrdnt1Amount>/<ingrdnt1Unit>/<ingrdnt2>/<ingrdnt2Amount>/<ingrdnt2Unit>/<ingrdnt3>/<ingrdnt3Amount>/<ingrdnt3Unit>/<served>')
-def add_drink(name, ingrdnt1, ingrdnt1Amount, ingrdnt1Unit, ingrdnt2, ingrdnt2Amount, ingrdnt2Unit, ingrdnt3, ingrdnt3Amount, ingrdnt3Unit, served):
+def add_drink(name, ingrdnt1, ingrdnt1Amount, ingrdnt1Unit, ingrdnt2, ingrdnt2Amount, ingrdnt2Unit, ingrdnt3 = None, ingrdnt3Amount = None, ingrdnt3Unit = None, served):
     ingredients = {}
     ingredients[ingrdnt1] = {
         'amount': ingrdnt1Amount,
