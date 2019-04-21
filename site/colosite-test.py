@@ -14,39 +14,38 @@ def make_drink(drink, strength):
 # to do this but its easy and YOLO for COLO
 @app.route('/api/updateVials/<vial1>/<vial2>/<vial3>/<vial4>/<vial5>/<vial6>')
 def update_vials(vial1, vial2, vial3, vial4, vial5, vial6):
-    ingredientMap = {};
-    ingredientMap[vial1] = 5;
-    ingredientMap[vial2] = 9;
-    ingredientMap[vial3] = 11;
-    ingredientMap[vial4] = 19;
-    ingredientMap[vial5] = 13;
-    ingredientMap[vial6] = 6;
-    
-    return 'Vials updated: ' + vial1 + ': ' + ingredientMap[vial1];
+    ingredientMap = {}
+    ingredientMap[vial1] = 5
+    ingredientMap[vial2] = 9
+    ingredientMap[vial3] = 11
+    ingredientMap[vial4] = 19
+    ingredientMap[vial5] = 13
+    ingredientMap[vial6] = 6
+
+    return 'Vials updated: ' + vial1 + ': ' + ingredientMap[vial1]
 
 # See above chaining comment
 @app.route('/api/addDrink/<name>/<ingrdnt1>/<ingrdnt1Amount>/<ingrdnt1Unit>/<ingrdnt2>/<ingrdnt2Amount>/<ingrdnt2Unit>/<ingrdnt3>/<ingrdnt3Amount>/<ingrdnt3Unit>/<served>')
 def add_drink(name, ingrdnt1, ingrdnt1Amount, ingrdnt1Unit, ingrdnt2, ingrdnt2Amount, ingrdnt2Unit, ingrdnt3, ingrdnt3Amount, ingrdnt3Unit, served):
-    ingredients = {};
+    ingredients = {}
     ingredients[ingrdnt1] = {
         'amount': ingrdnt1Amount,
         'unit': ingrdnt1Unit
-    };
+    }
     ingredients[ingrdnt2] = {
         'amount': ingrdnt2Amount,
         'unit': ingrdnt2Unit
-    };
-    if(ingrdnt3) {
+    }
+    if(ingrdnt3):
         ingredients[ingrdnt3] = {
             'amount': ingrdnt3Amount,
             'unit': ingrdnt3Unit
-        };
-    };
+        }
     
     drinkMap[name] = {
         'ingredients': ingredients,
         'served': served
-    };
+    }
     
     return 'Drink Added: ' + name + ingrdnt1 + served
 
