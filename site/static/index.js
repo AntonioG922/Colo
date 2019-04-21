@@ -66,7 +66,7 @@ function updateVials() {
     $.ajax({
         url: '/api/updateVials/' + vial1 + '/' + vial2 + '/' + vial3 + '/' + vial4 + '/' + vial5 + '/' + vial6
     }).done(function(data) {
-        $('#modal').modal('toggle');
+        $('#settingsModal').modal('toggle');
         showStatus('Vials Updated');
     });
 }
@@ -94,7 +94,7 @@ function addDrink() {
     $.ajax({
         url: '/api/addDrink/' + name + '/' + ingrdnt1 + '/' + ingrdnt1Amount + '/' + ingrdnt1Unit + '/' + ingrdnt2 + '/' + ingrdnt2Amount + '/' + ingrdnt2Unit + '/' + (ingrdnt3 ? ingrdnt3 + '/' + ingrdnt3Amount + '/' + ingrdnt3Unit + '/' : '') + served,
     }).done(function(data) {
-        $('#modal').modal('toggle');
+        $('#addDrinkModal').modal('toggle');
         showStatus(name + ' Added');
     });
 }
