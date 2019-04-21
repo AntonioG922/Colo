@@ -181,8 +181,10 @@ def reset_shaker():
 
 #------------------------------Drink Map-------------------------------
 # Contains a mapping for each drink to its  1) Ingredients
-#                                           2) Image
-#                                           3) Method of serving (i.e. shaken, stirred, none)
+#                                           2) Image 
+#                                           3) Method of serving (i.e. shots, cocktail)
+
+
 drinkMap = {
     "Margarita": {
         "ingredients": {
@@ -199,7 +201,7 @@ drinkMap = {
                 "unit": "oz"
             }
         },
-        "serve": "shaken"
+        "serve": "shot"
     },
     "Ginn fizz": {
         "ingredients": {
@@ -220,7 +222,7 @@ drinkMap = {
                 "unit": "oz"
             }
         },
-        "serve": "shaken"
+        "serve": "cocktail"
     },
     "Gimlet": {
         "ingredients": {
@@ -237,7 +239,7 @@ drinkMap = {
                 "unit": "oz"
             }
         },
-        "serve": "shaken"
+        "serve": "shot"
     },
     "Kamikaze": {
         "ingredients": {
@@ -254,7 +256,7 @@ drinkMap = {
                 "unit": "oz"
             }
         },
-        "serve": "shaken"
+        "serve": "shot"
     }
 }
 
@@ -268,18 +270,17 @@ unitMap = {
 # Map of ingredients to GPIO pins (vials)
 # Map below needs to be updated
 ingredientMap = {
-    "tequila": 5,
-    "contreau": 9,
+    "triple-sec": 5,
+    "vodka": 9,
     "lime-juice": 11,
     "gin": 19,
     "soda water": 13,
     "simple syrup": 6,
 }
 
+#-------------------------------Make Drink Function----------------------------------
 
-#---------------------------------Fill the Shaker----------------------------------
-
-def makeDrink(drinkName):
+def makeDrink(drinkName,strong):
     drink = drinkMap[drinkName]
 
     ingredientList = drink['ingredients']
@@ -295,6 +296,20 @@ def makeDrink(drinkName):
 
     # Clean out any liquid left in pipes
     pumpAir()
+
+    # Shake the Drink
+    shakeDrink()
+
+    # Conveyor movement
+    shot_or_cup = drink['serve']
+    if shot_or_cup=='shot':
+        move_conveyor_shots()
+    else
+        move_coveyor_cocktail()
+        
+    
+
+#---------------------------------Fill the Shaker----------------------------------
 
 def dispenseIngredient(ingredient, drinkName):
     pin = getPinFromIngredient(ingredient)
@@ -466,7 +481,7 @@ def move_conveyor_shots():
             #disablePump(number of final pump pin)
             break
     
-def move_conveyor_cups():
+def move_conveyor_cocktail():
     cup1_dist = 180 #mm: needs to be changed
     cup2_dist = 250 #mm
 
@@ -523,6 +538,7 @@ def move_conveyor_cups():
             break
 
 #------------------------------------Clean-up----------------------------------
+'''
 try:
     shak_ang = reset_shaker()
     print(shak_ang)
@@ -531,3 +547,5 @@ try:
 
 except KeyboardInterrupt:
     GPIO.cleanup()
+
+'''
