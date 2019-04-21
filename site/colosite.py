@@ -25,7 +25,7 @@ def update_vials(vial1, vial2, vial3, vial4, vial5, vial6):
     ingredientMap[vial5] = 13
     ingredientMap[vial6] = 6
     
-    return 'Vials updated: ' + vial1 + ': ' + ingredientMap[vial1]
+    return
 
 # See above chaining comment
 @app.route('/api/addDrink/<name>/<served>/<ingrdnt1>/<ingrdnt1Amount>/<ingrdnt1Unit>/<ingrdnt2>/<ingrdnt2Amount>/<ingrdnt2Unit>')
@@ -52,7 +52,7 @@ def add_drink(name, served, ingrdnt1, ingrdnt1Amount, ingrdnt1Unit, ingrdnt2, in
         'served': served
     }
     
-    return 'Drink Added: ' + name + ingrdnt1 + drinkMap[name].served
+    return
 
 #---------------------------------Site Setup ------------------------------
 
