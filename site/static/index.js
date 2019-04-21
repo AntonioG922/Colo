@@ -58,10 +58,16 @@ function updateVials() {
     vial5 = $('#vial5Input').val(),
     vial6 = $('#vial6Input').val()
     
+    if(!vial1 || !vial2 || !vial3 || !vial4 || !vial5 || !vial6) {
+        alert('Please fill in all fields');
+        return;
+    }
+    
     $.ajax({
         url: '/api/updateVials/' + vial1 + '/' + vial2 + '/' + vial3 + '/' + vial4 + '/' + vial5 + '/' + vial6
     }).done(function(data) {
-        alert('Vials Updated!');
+        $('#modal').modal('toggle');
+        showStatus('Vials Updated');
     });
 }
 
@@ -79,12 +85,25 @@ function addDrink() {
     ingrdnt3Unit = $('#drinkUnit3Input').val().toLowerCase();
 
     served = $('#drinkServedInput').val().toLowerCase();
+    
+    if(!name || !ingrdnt1 || !ingrdnt1Amount || !ingrdnt2 || !ingrdnt2Amount || !served || (!ingrdnt3 != !ingrdnt3Amount)) {
+        alert('Fill in all fields (ingredient 3 optional)');
+        return;
+    }
 
     $.ajax({
         url: '/api/addDrink/' + name + '/' + ingrdnt1 + '/' + ingrdnt1Amount + '/' + ingrdnt1Unit + '/' + ingrdnt2 + '/' + ingrdnt2Amount + '/' + ingrdnt2Unit + '/' + ingrdnt3 + '/' + ingrdnt3Amount + '/' + ingrdnt3Unit + '/' + served,
     }).done(function(data) {
-        alert('Drink Added!');
+        $('#modal').modal('toggle');
+        showStatus(name + ' Added');
     });
+}
+
+function showStatus(status) {
+    $('#status').css('right', '25px');
+    $('#statusText').html(status);
+    
+    setTimeout(() => $('#status').css('right', '-225px'), 2500)
 }
 
 function strokeTransition() {
