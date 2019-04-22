@@ -293,8 +293,8 @@ ingredientMap = {
 
 def makeDrink(drinkName):
     # Reset shit
-    reset_conveyor()
-    reset_shaker()
+    #reset_conveyor()
+    #reset_shaker()
     
     drink = drinkMap[drinkName]
 
@@ -313,7 +313,7 @@ def makeDrink(drinkName):
     pumpAir()
 
     # Shake the Drink
-    shakeDrink()
+    #shakeDrink()
 
     # Conveyor movement
     shot_or_cup = drink['serve']
