@@ -67,6 +67,9 @@ GPIO.setmode(GPIO.BCM)
 
 gpioList = [10,9,11,5,6,13,19,26]
 
+final_pump1 = 9
+final_pump2 = 10
+
 def setUpPumps():
     for pin in gpioList:
         GPIO.setup(pin, GPIO.IN)
@@ -243,6 +246,23 @@ drinkMap = {
             }
         },
         "serve": "shot"
+    },
+    "Lemon Drop Shot": {
+        "ingredients": {
+            "lemon-juice": {
+                "amount": 1.5,
+                "unit": "oz"
+            },
+            "vodka": {
+                "amount": 1.5,
+                "unit": "oz"
+            },
+            "simple-syrup": {
+                "amount": 1.5,
+                "unit": "oz"
+            }
+        },
+        "serve": "shot"
     }
 }
 
@@ -256,12 +276,11 @@ unitMap = {
 # Map of ingredients to GPIO pins (vials)
 # Map below needs to be updated
 ingredientMap = {
-    "triple-sec": 5,
-    "vodka": 9,
-    "lime-juice": 11,
-    "gin": 19,
-    "soda water": 13,
-    "simple syrup": 6,
+    "simple-syrup": 19,
+    "vodka": 11,
+    "lemon-juice": 13,
+    "gin": 6,
+    "soda water": 5,
 }
 
 #-------------------------------Make Drink Function----------------------------------
@@ -323,13 +342,11 @@ def getPinFromIngredient(ingredient):
     return ingredientMap[ingredient]
 
 def pumpAir():
-    for pump in airPumpList:
-        activatePump(pump)
+    activatePump(26)
     
-    time.sleep(10)
+    time.sleep(20)
 
-    for pump in airPumpList:
-        disablePump(pump)
+    disablePump(26)
 
 
 #--------------------------------------Shake---------------------------------------
@@ -402,23 +419,25 @@ def shakeDrink():
 #-------------------------------------Conveyor-------------------------------------        
 
 def move_conveyor_shots():
-    shot1_dist = 175 #mm: needs to be changed
-    shot2_dist = 225 #mm
-    shot3_dist = 275 #mm
+    shot1_dist = 101.6 #mm: needs to be changed
+    shot2_dist = 152 #mm
+    shot3_dist = 203 #mm
 
     GPIO.output(MODE_c, RESOLUTION['Full'])
     
     GPIO.output(DIR_c, CCW)
     delay = 0.005
+
+    disp_delay = 17.75*1.5/2 #how long to run a shot
     
     move_conveyor(shot1_dist)
-    pump_into_cup(60)
+    pump_into_cup(disp_delay)
 
     move_conveyor(shot2_dist)
-    pump_into_cup(60)
+    pump_into_cup(disp_delay)
 
     move_conveyor(shot3_dist)
-    pump_into_cup(60)
+    pump_into_cup(disp_delay)
 
     GPIO.output(DIR_c, CW)
     
@@ -432,12 +451,14 @@ def move_conveyor_cocktail():
     
     GPIO.output(DIR_c, CCW)
     delay = 0.005
+
+    disp_delay = 17.75*1.5
     
     move_conveyor(cup1_dist)
-    pump_into_cup(30)
+    pump_into_cup(disp_delay)
 
     move_conveyor(cup2_dist)
-    pump_into_cup(30)
+    pump_into_cup(disp_delay)
 
     GPIO.output(DIR_c, CW)
 
@@ -452,10 +473,11 @@ def move_conveyor(final_pos):
         conv_dist+=DPS
     return
 
-def pump_into_cup(delay):
+
+def pump_into_cup(disp_delay):
     activatePump(final_pump1)
     activatePump(final_pump2)
-    sleep(delay)
+    sleep(disp_delay)
     disablePump(final_pump1)
     disablePump(final_pump2)
     return
