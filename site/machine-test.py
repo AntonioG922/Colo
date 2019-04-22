@@ -149,9 +149,12 @@ def reset_shaker():
     #assuming it shouldn't be more than a qtr turn from 0
     hit_limit_switch = spin_shaker(CCW, 0.25)
     sleep(1.5)
+    print(hit_limit_switch)
     if not hit_limit_switch:
         spin_shaker(CW, 0.5)
         sleep(1.5)
+    else:
+        return
     
 def spin_shaker(direction, num_turns):
     shak_reset_steps = SPR*2 #doubled for half-step
