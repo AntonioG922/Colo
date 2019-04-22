@@ -151,6 +151,7 @@ def reset_shaker():
     sleep(1.5)
     print(hit_limit_switch)
     if not hit_limit_switch:
+        print ("didn't hit limit")
         spin_shaker(CW, 0.5)
         sleep(1.5)
     else:
