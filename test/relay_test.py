@@ -3,7 +3,7 @@ import RPi.GPIO as GPIO
 
 GPIO.setmode(GPIO.BCM)
 
-gpioList = [6]   
+gpioList = [5]   
 t = 5          #Sleep Time
 
 for pin in gpioList:
