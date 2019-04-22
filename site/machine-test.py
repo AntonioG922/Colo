@@ -488,6 +488,5 @@ def pump_into_cup(disp_delay):
 try:
     makeDrink("Lemon Drop Shot")
     GPIO.cleanup()
-
-except KeyboardInterrupt:
+except:
     GPIO.cleanup()
