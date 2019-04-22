@@ -43,12 +43,12 @@ def add_drink(name, served, ingrdnt1, ingrdnt1Amount, ingrdnt1Unit, ingrdnt2, in
         'amount': ingrdnt2Amount,
         'unit': ingrdnt2Unit
     }
-    if(ingrdnt3) {
+    if(ingrdnt3):
         ingredients[ingrdnt3] = {
             'amount': ingrdnt3Amount,
             'unit': ingrdnt3Unit
         }
-    }
+    
     
     drinkMap[name] = {
         'ingredients': ingredients,
