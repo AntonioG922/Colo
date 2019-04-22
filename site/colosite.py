@@ -144,17 +144,17 @@ def reset_conveyor():
 
 
 def reset_shaker():
-    shak_reset_steps = SPR*2 #doubled for half-step
     GPIO.output(MODE_s, RESOLUTION['Half']) #changes to half-step
-    shak_res_delay = 0.005
 
     #assuming it shouldn't be more than a qtr turn from 0
-    spin_shaker(CCW, 0.25, shak_reset_steps)
+    spin_shaker(CCW, 0.25)
     sleep(1.5)
-    spin_shaker(CW, 0.5, shak_reset_steps)
+    spin_shaker(CW, 0.5)
     sleep(1.5)
     
-def spin_shaker(direction, num_turns, shak_reset_steps):
+def spin_shaker(direction, num_turns):
+    shak_reset_steps = SPR*2 #doubled for half-step
+    shak_res_delay = 0.005
     for x in range(int(round(shak_reset_steps*num_turns))): 
         GPIO.output(DIR_s, direction)
         GPIO.output(STEP_s, GPIO.HIGH)
@@ -452,7 +452,6 @@ def move_conveyor_cocktail():
     GPIO.output(MODE_c, RESOLUTION['Full'])
     
     GPIO.output(DIR_c, CCW)
-    delay = 0.005
 
     disp_delay = 17.75*1.5
     
@@ -467,6 +466,7 @@ def move_conveyor_cocktail():
     reset_conveyor()
 
 def move_conveyor(final_pos):
+    delay = 0.005
     while conv_dist < final_pos:
         GPIO.output(STEP_c, GPIO.HIGH)
         sleep(delay)
