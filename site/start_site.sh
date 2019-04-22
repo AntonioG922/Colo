@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Set up Flask to host site
-export FLASK_APP=colosite-test.py
+export FLASK_APP=machine-test.py
 export FLASK_DEBUG=1
 export FLASK_ENV=development
 
