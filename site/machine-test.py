@@ -155,6 +155,7 @@ def reset_shaker():
         spin_shaker(CW, 0.5)
         sleep(1.5)
     else:
+        print ("reached else")
         return
     
 def spin_shaker(direction, num_turns):
