@@ -447,7 +447,6 @@ def move_conveyor_shots():
     GPIO.output(MODE_c, RESOLUTION['Full'])
     
     GPIO.output(DIR_c, CCW)
-    delay = 0.005
 
     disp_delay = 17.75*1.5/2 #how long to run a shot
     first_disp = disp_delay + 10
@@ -489,15 +488,16 @@ def move_conveyor_cocktail():
 
 def move_conveyor(final_pos):
     global conv_dist
-    delay = 0.005
+    delay = 0.005/8
+    print(final_pos)
     while conv_dist < final_pos:
         GPIO.output(STEP_c, GPIO.HIGH)
         sleep(delay)
         GPIO.output(STEP_c, GPIO.LOW)
         sleep(delay)
         conv_dist+=DPS
+        print(conv_dist)
     return
-
 
 def pump_into_cup(disp_delay):
     activatePump(final_pump1)
