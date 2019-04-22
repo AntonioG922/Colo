@@ -124,11 +124,11 @@ CCW = 0
 
 SPR = 200 #200 full steps per revolution
 
-DPS = 5/200 #distance per step: 5mm per full rotation
+DPS = 5.0/200.0 #distance per step: 5mm per full rotation
 
 APS = 1.8 #angle per full step in degrees
 
-conv_dist = 0
+conv_dist = 0.0
 
 #----------------------Resetting mechanical components----------------------
 
