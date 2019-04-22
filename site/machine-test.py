@@ -147,9 +147,9 @@ def reset_shaker():
     GPIO.output(MODE_s, RESOLUTION['Half']) #changes to half-step
 
     #assuming it shouldn't be more than a qtr turn from 0
-    not_hit_limit_switch = spin_shaker(CCW, 0.25)
+    hit_limit_switch = spin_shaker(CCW, 0.25)
     sleep(1.5)
-    if(not_hit_limit_switch):
+    if not hit_limit_switch:
         spin_shaker(CW, 0.5)
         sleep(1.5)
     
