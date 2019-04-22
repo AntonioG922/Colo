@@ -139,7 +139,7 @@ def reset_conveyor():
     GPIO.output(MODE_c, RESOLUTION['Full']) #changes to half-step
     GPIO.output(DIR_c, CW)
 
-    conv_res_delay = 0.005/5
+    conv_res_delay = 0.005/6
     
     for x in range(conv_reset_steps):
         GPIO.output(STEP_c, GPIO.HIGH)
@@ -443,7 +443,6 @@ def move_conveyor_shots():
     shot2_dist = 152 #mm
     shot3_dist = 203 #mm
 
-    GPIO.output(ENABLE_c,GPIO.LOW) # set enable to low, allow current to conveyor
     GPIO.output(MODE_c, RESOLUTION['Full'])
     
     GPIO.output(DIR_c, CCW)
@@ -469,7 +468,6 @@ def move_conveyor_cocktail():
     cup1_dist = 180 #mm: needs to be changed
     cup2_dist = 250 #mm
 
-    GPIO.output(ENABLE_c,GPIO.LOW) # set enable to low, allow current to conveyor
     GPIO.output(MODE_c, RESOLUTION['Full'])
     
     GPIO.output(DIR_c, CCW)
@@ -488,18 +486,19 @@ def move_conveyor_cocktail():
 
 def move_conveyor(final_pos):
     global conv_dist
-    delay = 0.005/5
-    print(final_pos)
+    delay = 0.005/6
+
+    GPIO.output(ENABLE_c,GPIO.LOW) # set enable to low, allow current to conveyor
     while conv_dist < final_pos:
         GPIO.output(STEP_c, GPIO.HIGH)
         sleep(delay)
         GPIO.output(STEP_c, GPIO.LOW)
         sleep(delay)
         conv_dist+=DPS
-        print(conv_dist)
     return
 
 def pump_into_cup(disp_delay):
+    GPIO.output(ENABLE_c,GPIO.HIGH) # set enable to high, DISABLE current to conveyor
     activatePump(final_pump1)
     activatePump(final_pump2)
     sleep(disp_delay)
