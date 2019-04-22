@@ -147,10 +147,11 @@ def reset_shaker():
     GPIO.output(MODE_s, RESOLUTION['Half']) #changes to half-step
 
     #assuming it shouldn't be more than a qtr turn from 0
-    spin_shaker(CCW, 0.25)
+    not_hit_limit_switch = spin_shaker(CCW, 0.25)
     sleep(1.5)
-    spin_shaker(CW, 0.5)
-    sleep(1.5)
+    if(not_hit_limit_switch):
+        spin_shaker(CW, 0.5)
+        sleep(1.5)
     
 def spin_shaker(direction, num_turns):
     shak_reset_steps = SPR*2 #doubled for half-step
@@ -162,8 +163,8 @@ def spin_shaker(direction, num_turns):
         GPIO.output(STEP_s, GPIO.LOW)
         sleep(shak_res_delay)
         if limit_switch_hit(LSwitch_s): 
-            shak_ang = 0 #zeroes the shaker angle
-            return shak_ang
+            return True
+    return False
     
 def limit_switch_hit(l_switch):
     return GPIO.input(l_switch)
