@@ -313,7 +313,7 @@ def makeDrink(drinkName,strong):
     shot_or_cup = drink['serve']
     if shot_or_cup=='shot':
         move_conveyor_shots()
-    else
+    else:
         move_conveyor_cocktail()
     
 
