@@ -10,8 +10,11 @@ def load_site():
 
 @app.route('/api/makeDrink/<drink>/<strength>')
 def make_drink(drink, strength):
-    makeDrink(drink)
-    return 'Drink Made' + drink + strength
+    try:
+        makeDrink(drink)
+        return
+    except KeyboardInterrupt:
+        GPIO.cleanup()
 
 # Chaining the vials on the url is not the best way
 # to do this but its easy and YOLO for COLO
@@ -62,8 +65,6 @@ app = Flask(__name__)
 
 GPIO.setmode(GPIO.BCM)
 
-# P = pump
-
 gpioList = [10,9,11,5,6,13,19,26]
 
 def setUpPumps():
@@ -94,7 +95,6 @@ RESOLUTION = {'Full': (0, 0, 0),
               '1/32': (1, 0, 1)}
 
 # Setup
-
 GPIO.setup(DIR_s, GPIO.OUT)
 GPIO.setup(STEP_s, GPIO.OUT)
 GPIO.setup(MODE_s, GPIO.OUT)
@@ -109,7 +109,6 @@ GPIO.output(MODE_s, RESOLUTION['Half']) # Shaker stepping
 GPIO.output(MODE_c, RESOLUTION['Half']) # Conveyor stepping
 
 # Motor Spin Prelims
-
 CW = 1
 CCW = 0
 
@@ -119,8 +118,9 @@ DPS = 5/200 #distance per step: 5mm per full rotation
 
 APS = 1.8 #angle per full step in degrees
 
-#----------------------Resetting mechanical components----------------------
+conv_dist = 0
 
+#----------------------Resetting mechanical components----------------------
 
 def reset_conveyor():
     conv_reset_steps = SPR*60 #doubled for half-step
@@ -135,49 +135,35 @@ def reset_conveyor():
         sleep(conv_res_delay)
         GPIO.output(STEP_c, GPIO.LOW)
         sleep(conv_res_delay)
-        if(GPIO.input(LSwitch_c)): 
+        if limit_switch_hit(LSwitch_c): 
             conv_dist = 0 #zeroes the conveyor distance
-            return conv_dist
-            break
+            return
 
 
 def reset_shaker():
-
     shak_reset_steps = SPR*2 #doubled for half-step
-
     GPIO.output(MODE_s, RESOLUTION['Half']) #changes to half-step
-    
-
     shak_res_delay = 0.005
 
     #assuming it shouldn't be more than a qtr turn from 0
+    spin_shaker(CCW, 0.25)
+    sleep(1.5)
+    spin_shaker(CW, 0.5)
+    sleep(1.5)
     
-    for x in range(int(round(shak_reset_steps*0.25))): #qtr turn CCW
-        GPIO.output(DIR_s, CCW)
+def spin_shaker(direction, num_turns):
+    for x in range(int(round(shak_reset_steps*num_turns))): 
+        GPIO.output(DIR_s, direction)
         GPIO.output(STEP_s, GPIO.HIGH)
         sleep(shak_res_delay)
         GPIO.output(STEP_s, GPIO.LOW)
         sleep(shak_res_delay)
-        if(GPIO.input(LSwitch_s)): 
+        if limit_switch_hit(LSwitch_s): 
             shak_ang = 0 #zeroes the shaker angle
             return shak_ang
-            break
-
-    sleep(1.5)
     
-    for x in range(int(round(shak_reset_steps*0.5))): #half turn CW
-        GPIO.output(DIR_s, CW)
-        GPIO.output(STEP_s, GPIO.HIGH)
-        sleep(shak_res_delay)
-        GPIO.output(STEP_s, GPIO.LOW)
-        sleep(shak_res_delay)
-        if(GPIO.input(LSwitch_s)): 
-            shak_ang = 0 #zeroes the shaker angle
-            return shak_ang
-            break
-
-    sleep(1.5)
-    
+def limit_switch_hit(l_switch):
+    return GPIO.input(l_switch)
 
 #------------------------------Drink Map-------------------------------
 # Contains a mapping for each drink to its  1) Ingredients
@@ -281,6 +267,10 @@ ingredientMap = {
 #-------------------------------Make Drink Function----------------------------------
 
 def makeDrink(drinkName,strong):
+    # Reset shit
+    reset_conveyor()
+    reset_shaker()
+    
     drink = drinkMap[drinkName]
 
     ingredientList = drink['ingredients']
@@ -305,8 +295,7 @@ def makeDrink(drinkName,strong):
     if shot_or_cup=='shot':
         move_conveyor_shots()
     else
-        move_coveyor_cocktail()
-        
+        move_conveyor_cocktail()
     
 
 #---------------------------------Fill the Shaker----------------------------------
@@ -348,7 +337,6 @@ def shakeDrink():
     GPIO.output(MODE_s, RESOLUTION['Half']) # make sure everything else changes 
     
     shake_steps = round(200*0.41)*2 #164 half steps: doubled because of half step
-
     
     # initial shake since it starts at the top
     GPIO.output(DIR_s, CW) #sets rotations CW
@@ -423,129 +411,51 @@ def move_conveyor_shots():
     GPIO.output(DIR_c, CCW)
     delay = 0.005
     
-    for x in range(SPR*60): #fill first shot
-        GPIO.output(STEP_c, GPIO.HIGH)
-        sleep(delay)
-        GPIO.output(STEP_c, GPIO.LOW)
-        sleep(delay)
-        conv_dist+=DPS
-        if conv_dist>=shot1_dist:
-            #activatePump(number of final pump pin)
-            #activatePump(number of final pump pin)
-            sleep(30)
-            #disablePump(number of final pump pin)
-            #disablePump(number of final pump pin)
-            break
+    move_conveyor(shot1_dist)
+    pump_into_cup(60)
 
-    for x in range(SPR*30): #fill second cup
-        GPIO.output(STEP_c, GPIO.HIGH)
-        sleep(delay)
-        GPIO.output(STEP_c, GPIO.LOW)
-        sleep(delay)
-        conv_dist+=DPS
-        if conv_dist>=shot2_dist:
-            #activatePump(number of final pump pin)
-            #activatePump(number of final pump pin)
-            sleep(60)
-            #disablePump(number of final pump pin)
-            #disablePump(number of final pump pin)
-            break
+    move_conveyor(shot2_dist)
+    pump_into_cup(60)
 
-    for x in range(SPR*30): #fill third cup
-        GPIO.output(STEP_c, GPIO.HIGH)
-        sleep(delay)
-        GPIO.output(STEP_c, GPIO.LOW)
-        sleep(delay)
-        conv_dist+=DPS
-        if conv_dist>=shot3_dist:
-            #activatePump(number of final pump pin)
-            #activatePump(number of final pump pin)
-            sleep(60)
-            #disablePump(number of final pump pin)
-            #disablePump(number of final pump pin)
-            break
+    move_conveyor(shot3_dist)
+    pump_into_cup(60)
 
     GPIO.output(DIR_c, CW)
     
-    for x in range(SPR*80): #come back to 10 mm from start
-        GPIO.output(STEP_c, GPIO.HIGH)
-        sleep(delay)
-        GPIO.output(STEP_c, GPIO.LOW)
-        sleep(delay)
-        conv_dist+=DPS
-        if conv_dist<=10:
-            #activatePump(number of final pump pin)
-            #activatePump(number of final pump pin)
-            sleep(60)
-            #disablePump(number of final pump pin)
-            #disablePump(number of final pump pin)
-            break
+    reset_conveyor()
     
 def move_conveyor_cocktail():
     cup1_dist = 180 #mm: needs to be changed
     cup2_dist = 250 #mm
-
 
     GPIO.output(MODE_c, RESOLUTION['Full'])
     
     GPIO.output(DIR_c, CCW)
     delay = 0.005
     
-    for x in range(SPR*60): #fill first shot
-        GPIO.output(STEP_c, GPIO.HIGH)
-        sleep(delay)
-        GPIO.output(STEP_c, GPIO.LOW)
-        sleep(delay)
-        conv_dist+=DPS
-        if conv_dist>=cup1_dist:
-            #activatePump(number of final pump pin)
-            #activatePump(number of final pump pin)
-            sleep(30)
-            #disablePump(number of final pump pin)
-            #disablePump(number of final pump pin)
-            break
+    move_conveyor(cup1_dist)
+    pump_into_cup(30)
 
-    for x in range(SPR*30): #fill second cup
-        GPIO.output(STEP_c, GPIO.HIGH)
-        sleep(delay)
-        GPIO.output(STEP_c, GPIO.LOW)
-        sleep(delay)
-        conv_dist+=DPS
-        if conv_dist>=cup2_dist:
-            #activatePump(number of final pump pin)
-            #activatePump(number of final pump pin)
-            sleep(30)
-            #disablePump(number of final pump pin)
-            #disablePump(number of final pump pin)
-            break
-
-
+    move_conveyor(cup2_dist)
+    pump_into_cup(30)
 
     GPIO.output(DIR_c, CW)
-    
-    for x in range(SPR*80): #come back to 10 mm from start
+
+    reset_conveyor()
+
+def move_conveyor(final_pos):
+    while conv_dist < final_pos:
         GPIO.output(STEP_c, GPIO.HIGH)
         sleep(delay)
         GPIO.output(STEP_c, GPIO.LOW)
         sleep(delay)
         conv_dist+=DPS
-        if conv_dist<=10:
-            #activatePump(number of final pump pin)
-            #activatePump(number of final pump pin)
-            sleep(30)
-            #disablePump(number of final pump pin)
-            #disablePump(number of final pump pin)
-            break
+    return
 
-#------------------------------------Clean-up----------------------------------
-'''
-try:
-    shak_ang = reset_shaker()
-    print(shak_ang)
-    shakeDrink()
-    GPIO.cleanup()
-
-except KeyboardInterrupt:
-    GPIO.cleanup()
-
-'''
+def pump_into_cup(delay):
+    activatePump(final_pump1)
+    activatePump(final_pump2)
+    sleep(delay)
+    disablePump(final_pump1)
+    disablePump(final_pump2)
+    return
