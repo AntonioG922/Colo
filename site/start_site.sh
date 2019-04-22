@@ -6,5 +6,5 @@ export FLASK_DEBUG=1
 export FLASK_ENV=development
 
 # Start site
-cd Desktop/Colo/site
+cd ~/Desktop/Colo/site
 flask run
