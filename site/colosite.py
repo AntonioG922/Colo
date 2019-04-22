@@ -429,15 +429,17 @@ def move_conveyor_shots():
     delay = 0.005
 
     disp_delay = 17.75*1.5/2 #how long to run a shot
+    first_disp = disp_delay + 10
+    last_disp = disp_delay + 10
     
     move_conveyor(shot1_dist)
-    pump_into_cup(disp_delay)
+    pump_into_cup(first_disp)
 
     move_conveyor(shot2_dist)
     pump_into_cup(disp_delay)
 
     move_conveyor(shot3_dist)
-    pump_into_cup(disp_delay)
+    pump_into_cup(last_disp)
 
     GPIO.output(DIR_c, CW)
     
