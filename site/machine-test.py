@@ -422,11 +422,7 @@ def shakeDrink():
     
     GPIO.output(DIR_s, CCW) #sets rotations CW
     for x in range(1,int(shake_steps*2)): #328 steps: goes slower until it hits the zero switch
-        mod,rem = divmod(x,40)
-        if mod>4:
-            mod=9-mod
-            
-        delay = 0.01/((mod+1)) # should start slow and ramp up speed
+        delay = 0.005
         GPIO.output(STEP_s, GPIO.HIGH)
         sleep(delay)
         GPIO.output(STEP_s, GPIO.LOW)
