@@ -149,12 +149,12 @@ def reset_shaker():
     shak_res_delay = 0.005
 
     #assuming it shouldn't be more than a qtr turn from 0
-    spin_shaker(CCW, 0.25)
+    spin_shaker(CCW, 0.25, shak_reset_steps)
     sleep(1.5)
-    spin_shaker(CW, 0.5)
+    spin_shaker(CW, 0.5, shak_reset_steps)
     sleep(1.5)
     
-def spin_shaker(direction, num_turns):
+def spin_shaker(direction, num_turns, shak_reset_steps):
     for x in range(int(round(shak_reset_steps*num_turns))): 
         GPIO.output(DIR_s, direction)
         GPIO.output(STEP_s, GPIO.HIGH)
