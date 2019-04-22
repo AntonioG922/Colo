@@ -81,6 +81,7 @@ DIR_c = 23
 STEP_c = 24
 MODE_c = (18,15,14)
 LSwitch_c = 25
+ENABLE_c = 7
 
 
 # Shake (_s)
@@ -88,6 +89,7 @@ DIR_s = 2
 STEP_s = 3
 MODE_s = (22,27,17)
 LSwitch_s = 4
+ENABLE_s = 12
 
 # Modes
 RESOLUTION = {'Full': (0, 0, 0),
@@ -111,6 +113,11 @@ GPIO.setup(LSwitch_c, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 GPIO.output(MODE_s, RESOLUTION['Half']) # Shaker stepping
 GPIO.output(MODE_c, RESOLUTION['Half']) # Conveyor stepping
 
+GPIO.setup(ENABLE_c,GPIO.OUT)
+GPIO.output(ENABLE_c,GPIO.HIGH)
+GPIO.setup(ENABLE_s,GPIO.OUT)
+GPIO.output(ENABLE_s,GPIO.HIGH)
+
 # Motor Spin Prelims
 CW = 1
 CCW = 0
@@ -126,6 +133,7 @@ conv_dist = 0
 #----------------------Resetting mechanical components----------------------
 
 def reset_conveyor():
+    GPIO.output(ENABLE_c,GPIO.LOW) # set enable to low, allow current to conveyor
     conv_reset_steps = SPR*60 #doubled for half-step
     
     GPIO.output(MODE_c, RESOLUTION['Full']) #changes to half-step
@@ -140,10 +148,12 @@ def reset_conveyor():
         sleep(conv_res_delay)
         if limit_switch_hit(LSwitch_c): 
             conv_dist = 0 #zeroes the conveyor distance
+            GPIO.output(ENABLE_c,GPIO.HIGH) # set enable to high, DISABLE current to conveyor
             return
 
 
 def reset_shaker():
+    GPIO.output(ENABLE_s,GPIO.LOW) # set enable to low, allow current to shaker
     GPIO.output(MODE_s, RESOLUTION['Half']) #changes to half-step
 
     #assuming it shouldn't be more than a qtr turn from 0
@@ -154,7 +164,9 @@ def reset_shaker():
         print ("didn't hit limit")
         spin_shaker(CW, 0.5)
         sleep(1.5)
+        GPIO.output(ENABLE_s,GPIO.HIGH) # set enable to high, DISABLE current to shaker
     else:
+        GPIO.output(ENABLE_s,GPIO.HIGH) # set enable to high, DISABLE current to shaker
         print ("reached else")
         return
     
@@ -358,6 +370,7 @@ def pumpAir():
 
 #--------------------------------------Shake---------------------------------------
 def shakeDrink():
+    GPIO.output(ENABLE_s,GPIO.LOW) # set enable to low, allow current to shaker
     GPIO.output(MODE_s, RESOLUTION['Half']) # make sure everything else changes 
     
     shake_steps = round(200*0.41)*2 #164 half steps: doubled because of half step
@@ -405,7 +418,7 @@ def shakeDrink():
 
         shakes+=1
 
-    sleep(0.5)
+    sleep(2)
     
     GPIO.output(DIR_s, CCW) #sets rotations CW
     for x in range(1,int(shake_steps*2)): #328 steps: goes slower until it hits the zero switch
@@ -420,8 +433,8 @@ def shakeDrink():
         sleep(delay)
         if(GPIO.input(LSwitch_s)): 
             shak_ang = 0 #zeroes the conveyor distance
+            GPIO.output(ENABLE_s,GPIO.HIGH) # set enable to high, DISABLE current to shaker
             return shak_ang
-            break
     
 #-------------------------------------Conveyor-------------------------------------        
 
@@ -430,6 +443,7 @@ def move_conveyor_shots():
     shot2_dist = 152 #mm
     shot3_dist = 203 #mm
 
+    GPIO.output(ENABLE_c,GPIO.LOW) # set enable to low, allow current to conveyor
     GPIO.output(MODE_c, RESOLUTION['Full'])
     
     GPIO.output(DIR_c, CCW)
@@ -456,6 +470,7 @@ def move_conveyor_cocktail():
     cup1_dist = 180 #mm: needs to be changed
     cup2_dist = 250 #mm
 
+    GPIO.output(ENABLE_c,GPIO.LOW) # set enable to low, allow current to conveyor
     GPIO.output(MODE_c, RESOLUTION['Full'])
     
     GPIO.output(DIR_c, CCW)
@@ -473,6 +488,7 @@ def move_conveyor_cocktail():
     reset_conveyor()
 
 def move_conveyor(final_pos):
+    global conv_dist
     delay = 0.005
     while conv_dist < final_pos:
         GPIO.output(STEP_c, GPIO.HIGH)
