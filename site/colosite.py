@@ -4,6 +4,10 @@ from time import *
 import RPi.GPIO as GPIO
 from multiprocessing.dummy import Pool as ThreadPool
 
+
+#---------------------------------Site Setup ------------------------------
+app = Flask(__name__)
+
 @app.route('/')
 def load_site():
     return render_template('index.html')
@@ -56,10 +60,6 @@ def add_drink(name, served, ingrdnt1, ingrdnt1Amount, ingrdnt1Unit, ingrdnt2, in
     }
     
     return
-
-#---------------------------------Site Setup ------------------------------
-
-app = Flask(__name__)
 
 #---------------------------------GPIO Setup ------------------------------
 
