@@ -3,8 +3,11 @@ import RPi.GPIO as GPIO
 
 GPIO.setmode(GPIO.BCM)
 
-gpioList = [9, 10]   
+gpioList = [9, 26]   
 t = 30          #Sleep Time
+
+GPIO.setup(7,GPIO.OUT)
+GPIO.output(7,GPIO.HIGH)
 
 for pin in gpioList:
     GPIO.setup(pin, GPIO.OUT)
