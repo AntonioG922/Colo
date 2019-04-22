@@ -285,7 +285,7 @@ ingredientMap = {
 
 #-------------------------------Make Drink Function----------------------------------
 
-def makeDrink(drinkName,strong):
+def makeDrink(drinkName):
     # Reset shit
     reset_conveyor()
     reset_shaker()
