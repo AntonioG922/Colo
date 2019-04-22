@@ -25,6 +25,14 @@ $(document).ready( function() {
     $('#addDrinkBtn').click(function() {
         addDrink();
     });
+    
+    $('#drink_display_close').click(function() {
+        let progress = document.querySelector('.circle__progress--fill');
+        let radius = progress.r.baseVal.value;
+        let circumference = 2 * Math.PI * radius;
+        progress.style.transition = "0s stroke-dashoffset linear";
+        progress.style.strokeDashoffset = circumference;
+    });
 });
 
 function showDrinkProgress(strength) {
@@ -34,19 +42,14 @@ function showDrinkProgress(strength) {
 
     drink = $('#drinkName').html();
     sendDrinkOrder(drink, strength);
-
-    setTimeout(() => $('#drinkProgress').html('Mixing drink...'), 5000);
-    setTimeout(() => $('#drinkProgress').html('Dispensing drink...'), 8000);
-    setTimeout(() => $('#drinkProgress').html('Drink Complete!'), 10000);
-    setTimeout(() => $('.close').show(), 10000);
 }
 
 function sendDrinkOrder(drink, strength) {
     $.ajax({
         url: '/api/makeDrink/' + drink + '/' + strength
     }).done(function(data) {
-        strokeTransition();
-        increaseNumber();
+        strokeTransition(20);
+        increaseNumber(20);
     });
 }
 
@@ -106,25 +109,33 @@ function showStatus(status) {
     setTimeout(() => $('#status').css('right', '-225px'), 2500)
 }
 
-function strokeTransition() {
-    const transitionDuration = 10000;
+function strokeTransition(make_time) {
     let progress = document.querySelector('.circle__progress--fill');
     let radius = progress.r.baseVal.value;
     let circumference = 2 * Math.PI * radius;
-
-    progress.style.setProperty('--initialStroke', circumference);
-    progress.style.setProperty('--transitionDuration', `${transitionDuration}ms`);
-
-    setTimeout(() => progress.style.strokeDashoffset = 0, 100);
+    
+    progress.style.strokeDasharray = `${circumference} ${circumference}`;
+    progress.style.strokeDashoffset = circumference;
+    setTimeout(function() {
+        progress.style.transition = make_time + "s stroke-dashoffset linear";progress.style.strokeDashoffset = 0;
+    }, 20)
+    
+    make_time_ms = make_time * 1000;
+    setTimeout(() => $('#drinkProgress').html('Mixing drink...'), make_time_ms/2);
+    setTimeout(() => $('#drinkProgress').html('Dispensing drink...'), make_time_ms/1.25);
+    setTimeout(() => $('#drinkProgress').html('Drink Complete!'), make_time_ms);
+    setTimeout(() => $('.close').show(), make_time_ms);
 }
 
-function increaseNumber() {
+function increaseNumber(make_time) {
     let element = document.querySelector(`.percent__int`),
-        interval = 99,
+        interval = make_time * 9.85,
         counter = 0;
 
     let increaseInterval = setInterval(() => {
-        if (counter === 100) { window.clearInterval(increaseInterval); }
+        if (counter === 100) {
+            window.clearInterval(increaseInterval);
+        }
 
         element.textContent = counter;
         counter++;

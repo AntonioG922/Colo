@@ -76,10 +76,5 @@ nav > img {
 .percent__int { font-size: 28px; }
 
 .circle__progress--fill {
-  --initialStroke: 0;
-  --transitionDuration: 0;
   stroke-opacity: 1;
-  stroke-dasharray: var(--initialStroke);
-  stroke-dashoffset: var(--initialStroke);
-  transition: stroke-dashoffset var(--transitionDuration) ease;
 }
