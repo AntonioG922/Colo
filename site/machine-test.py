@@ -1,6 +1,6 @@
 from flask import Flask
 from flask import render_template
-from time import *
+from time import sleep
 import RPi.GPIO as GPIO
 from multiprocessing.dummy import Pool as ThreadPool
 
@@ -328,7 +328,7 @@ def makeDrink(drinkName):
 def dispenseIngredient(ingredient, drinkName):
     pin = getPinFromIngredient(ingredient)
     activatePump(pin)
-    time.sleep(getPumpTime(ingredient, drinkName))
+    sleep(getPumpTime(ingredient, drinkName))
     disablePump(pin)
 
 def getPumpTime(ingredient, drinkName):
@@ -348,9 +348,10 @@ def getPinFromIngredient(ingredient):
     return ingredientMap[ingredient]
 
 def pumpAir():
+    print('Activating pin 26...')
     activatePump(26)
     
-    time.sleep(20)
+    sleep(20)
 
     disablePump(26)
 
