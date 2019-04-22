@@ -139,7 +139,7 @@ def reset_conveyor():
     GPIO.output(MODE_c, RESOLUTION['Full']) #changes to half-step
     GPIO.output(DIR_c, CW)
 
-    conv_res_delay = 0.005/8
+    conv_res_delay = 0.005/5
     
     for x in range(conv_reset_steps):
         GPIO.output(STEP_c, GPIO.HIGH)
@@ -488,7 +488,7 @@ def move_conveyor_cocktail():
 
 def move_conveyor(final_pos):
     global conv_dist
-    delay = 0.005/8
+    delay = 0.005/5
     print(final_pos)
     while conv_dist < final_pos:
         GPIO.output(STEP_c, GPIO.HIGH)
