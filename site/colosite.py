@@ -359,7 +359,7 @@ def shakeDrink():
     GPIO.output(ENABLE_s,GPIO.LOW) # set enable to low, allow current to shaker
     GPIO.output(MODE_s, RESOLUTION['Half']) # make sure everything else changes 
     
-    shake_steps = round(200*0.20)*2 #80 half steps: doubled because of half step
+    shake_steps = round(200*0.23)*2 #92 half steps: doubled because of half step
 
     # initial shake since it starts at the top
     GPIO.output(DIR_s, CW) #sets rotations CW
@@ -374,10 +374,10 @@ def shakeDrink():
     
     while shakes<9: #shake 10 times counting first and last moves
         GPIO.output(DIR_s, CCW) #sets rotations CW
-        for x in range(1,int(shake_steps*2)): #224 steps: goes from +100 to -100
+        for x in range(1,int(shake_steps*2)): #184 steps: goes from +100 to -100
             mod,rem = divmod(x,20)
-            if mod>4:
-                mod=9-mod
+            if mod>5:
+                mod=10-mod
                 
             delay = 0.01/((mod+1)) # should start slow and ramp up speed
             GPIO.output(STEP_s, GPIO.HIGH)
@@ -386,10 +386,10 @@ def shakeDrink():
             sleep(delay)
 
         GPIO.output(DIR_s, CW) #sets rotations CCW
-        for x in range(1,int(shake_steps*2)): #224 steps: goes from -100 to +100
+        for x in range(1,int(shake_steps*2)): #184 steps: goes from -100 to +100
             mod,rem = divmod(x,20)
-            if mod>4:
-                mod=9-mod
+            if mod>5:
+                mod=10-mod
                 
             delay = 0.01/((mod+1)) # should start slow and ramp up speed
             GPIO.output(STEP_s, GPIO.HIGH)
@@ -401,7 +401,7 @@ def shakeDrink():
 
     sleep(0.5)
     
-    GPIO.output(DIR_s, CCW) #sets rotations CW
+    GPIO.output(DIR_s, CCW) #sets rotations CCW
     for x in range(1,int(shake_steps*2)): #224 steps: goes slower until it hits the zero switch
         delay = 0.005 # should start slow and ramp up speed
         GPIO.output(STEP_s, GPIO.HIGH)
@@ -412,6 +412,16 @@ def shakeDrink():
             shak_ang = 0 #zeroes the conveyor distance
             GPIO.output(ENABLE_s,GPIO.HIGH) # set enable to high, DISABLE current to shaker
             return shak_ang
+
+    GPIO.output(DIR_s, CW) #sets rotations CCW
+    for x in range(1,33): #33 half steps: goes slower until it hits the zero switch
+        delay = 0.005 # should start slow and ramp up speed
+        GPIO.output(STEP_s, GPIO.HIGH)
+        sleep(delay)
+        GPIO.output(STEP_s, GPIO.LOW)
+        sleep(delay)
+
+    
     
 #-------------------------------------Conveyor-------------------------------------        
 
