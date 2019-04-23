@@ -45,11 +45,11 @@ function showDrinkProgress(strength) {
 }
 
 function sendDrinkOrder(drink, strength) {
-    strokeTransition(120);
-    increaseNumber(120);
     $.ajax({
         url: '/api/makeDrink/' + drink + '/' + strength
-    })
+    });
+    strokeTransition(120);
+    increaseNumber(120);
 }
 
 function updateVials() {
