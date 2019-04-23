@@ -411,7 +411,6 @@ def shakeDrink():
         if(GPIO.input(LSwitch_s)): 
             shak_ang = 0 #zeroes the conveyor distance
             GPIO.output(ENABLE_s,GPIO.HIGH) # set enable to high, DISABLE current to shaker
-            return shak_ang
 
     GPIO.output(DIR_s, CW) #sets rotations CCW
     for x in range(1,33): #33 half steps: goes slower until it hits the zero switch
@@ -421,14 +420,16 @@ def shakeDrink():
         GPIO.output(STEP_s, GPIO.LOW)
         sleep(delay)
 
+    return shak_ang
+
     
     
 #-------------------------------------Conveyor-------------------------------------        
 
 def move_conveyor_shots():
-    shot1_dist = 134 #mm: needs to be changed
-    shot2_dist = 184 #mm
-    shot3_dist = 235 #mm
+    shot1_dist = 94 #mm: needs to be changed
+    shot2_dist = 144 #mm
+    shot3_dist = 195 #mm
 
     GPIO.output(MODE_c, RESOLUTION['Full'])
     
