@@ -283,7 +283,7 @@ ingredientMap = {
 
 def makeDrink(drinkName):
     # Reset shit
-    reset_conveyor()
+    #reset_conveyor()
     reset_shaker()
 
     # Move shaker 100 degrees left
@@ -300,7 +300,7 @@ def makeDrink(drinkName):
         sleep(delay)
         GPIO.output(STEP_s, GPIO.LOW)
         sleep(delay)
-    
+    '''
     drink = drinkMap[drinkName]
 
     ingredientList = drink['ingredients']
@@ -308,6 +308,7 @@ def makeDrink(drinkName):
     # Make the Pool of workers
     pool = ThreadPool(len(ingredientList))
 
+    pullAirOut()
     pool.map(lambda x: dispenseIngredient(x, drinkName), ingredientList)
     
     # Close the pool and wait for the work to finish 
@@ -316,17 +317,17 @@ def makeDrink(drinkName):
 
     # Clean out any liquid left in pipes
     pumpAir(20)
-
+'''
     # Shake the Drink
     shakeDrink()
-
+'''
     # Conveyor movement
     shot_or_cup = drink['serve']
     if shot_or_cup=='shot':
         move_conveyor_shots()
     else:
         move_conveyor_cocktail()
-    
+'''
 
 #---------------------------------Fill the Shaker----------------------------------
 
