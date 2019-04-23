@@ -48,8 +48,8 @@ function sendDrinkOrder(drink, strength) {
     $.ajax({
         url: '/api/makeDrink/' + drink + '/' + strength
     });
-    strokeTransition(120);
-    increaseNumber(120);
+    strokeTransition(170);
+    increaseNumber(170);
 }
 
 function updateVials() {
@@ -120,8 +120,8 @@ function strokeTransition(make_time) {
     }, 20)
     
     make_time_ms = make_time * 1000;
-    setTimeout(() => $('#drinkProgress').html('Mixing drink...'), make_time_ms/2);
-    setTimeout(() => $('#drinkProgress').html('Dispensing drink...'), make_time_ms/1.25);
+    setTimeout(() => $('#drinkProgress').html('Mixing drink...'), make_time_ms/3);
+    setTimeout(() => $('#drinkProgress').html('Dispensing drink...'), make_time_ms/3 + make_time_ms/7.15);
     setTimeout(() => $('#drinkProgress').html('Drink Complete!'), make_time_ms);
     setTimeout(() => $('.close').show(), make_time_ms);
 }
