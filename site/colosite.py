@@ -15,7 +15,7 @@ def load_site():
 def make_drink(drink, strength):
     try:
         makeDrink(drink)
-        return True
+        return "Drink Made!"
     except KeyboardInterrupt:
         GPIO.cleanup()
 
@@ -31,7 +31,7 @@ def update_vials(vial1, vial2, vial3, vial4, vial5, vial6):
     ingredientMap[vial5] = 13
     ingredientMap[vial6] = 6
     
-    return
+    return "Success"
 
 # See above chaining comment
 @app.route('/api/addDrink/<name>/<served>/<ingrdnt1>/<ingrdnt1Amount>/<ingrdnt1Unit>/<ingrdnt2>/<ingrdnt2Amount>/<ingrdnt2Unit>')
@@ -58,7 +58,7 @@ def add_drink(name, served, ingrdnt1, ingrdnt1Amount, ingrdnt1Unit, ingrdnt2, in
         'served': served
     }
     
-    return
+    return "Success"
 
 #---------------------------------GPIO Setup ------------------------------
 
@@ -283,11 +283,9 @@ ingredientMap = {
 
 def makeDrink(drinkName):
     # Reset shit
-    #reset_conveyor()
+    reset_conveyor()
     reset_shaker()
 
-
-    '''
     drink = drinkMap[drinkName]
 
     ingredientList = drink['ingredients']
@@ -295,7 +293,6 @@ def makeDrink(drinkName):
     # Make the Pool of workers
     pool = ThreadPool(len(ingredientList))
 
-    pullAirOut()
     pool.map(lambda x: dispenseIngredient(x, drinkName), ingredientList)
     
     # Close the pool and wait for the work to finish 
@@ -304,17 +301,17 @@ def makeDrink(drinkName):
 
     # Clean out any liquid left in pipes
     pumpAir(20)
-'''
+
     # Shake the Drink
     shakeDrink()
-'''
+
     # Conveyor movement
     shot_or_cup = drink['serve']
     if shot_or_cup=='shot':
         move_conveyor_shots()
     else:
         move_conveyor_cocktail()
-'''
+
 
 #---------------------------------Fill the Shaker----------------------------------
 
