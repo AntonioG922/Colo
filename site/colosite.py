@@ -488,9 +488,11 @@ def move_conveyor_shots():
     
     GPIO.output(DIR_c, CCW)
 
-    disp_delay = unitMap['oz']*1.67/2 #how long to run a shot
-    first_disp = disp_delay + 10
-    last_disp = disp_delay + 10
+    #total time of delays needs to be 54.375s
+
+    disp_delay = 17.75*1.67/2 #how long to run a shot
+    first_disp = disp_delay + 5
+    last_disp = disp_delay + 5
     
     move_conveyor(shot1_dist)
     pump_into_cup(first_disp)
@@ -513,7 +515,8 @@ def move_conveyor_cocktail():
     
     GPIO.output(DIR_c, CCW)
 
-    disp_delay = unitMap['oz']*1.5
+    # total time of delays needs to be 81
+    disp_delay = 17.75*2 + 5
     
     move_conveyor(cup1_dist)
     pump_into_cup(disp_delay)
