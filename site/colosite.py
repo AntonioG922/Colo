@@ -426,9 +426,9 @@ def shakeDrink():
 #-------------------------------------Conveyor-------------------------------------        
 
 def move_conveyor_shots():
-    shot1_dist = 114 #mm: needs to be changed
-    shot2_dist = 164 #mm
-    shot3_dist = 215 #mm
+    shot1_dist = 134 #mm: needs to be changed
+    shot2_dist = 184 #mm
+    shot3_dist = 235 #mm
 
     GPIO.output(MODE_c, RESOLUTION['Full'])
     
