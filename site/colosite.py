@@ -440,9 +440,9 @@ def move_conveyor_shots():
 
     #total time of delays needs to be 54.375s
 
-    disp_delay = 17.75*1.67/2 #how long to run a shot
+    disp_delay = 17.75*1.75/2 #how long to run a shot
     first_disp = disp_delay + 5
-    last_disp = disp_delay + 5
+    last_disp = disp_delay + 6
     
     move_conveyor(shot1_dist)
     pump_into_cup(first_disp)
