@@ -192,61 +192,6 @@ def limit_switch_hit(l_switch):
 
 
 drinkMap = {
-    "Margarita": {
-        "ingredients": {
-            "tequila": {
-                "amount": 2,
-                "unit": "oz"
-            },
-            "contreau": {
-                "amount": 1,
-                "unit": "oz"
-            },
-            "lime-juice": {
-                "amount": 1,
-                "unit": "oz"
-            }
-        },
-        "serve": "shot"
-    },
-    "Ginn fizz": {
-        "ingredients": {
-            "gin": {
-                "amount": 2,
-                "unit": "oz"
-            },
-            "simple syrup": {
-                "amount": 0.75,
-                "unit": "oz"
-            },
-            "lime-juice": {
-                "amount": 0.75,
-                "unit": "oz"
-            },
-            "Soda Water":{
-                "amount":1.5,
-                "unit": "oz"
-            }
-        },
-        "serve": "cocktail"
-    },
-    "Gimlet": {
-        "ingredients": {
-            "gin": {
-                "amount": 2,
-                "unit": "oz"
-            },
-            "simple syrup": {
-                "amount": 0.75,
-                "unit": "oz"
-            },
-            "lime-juice": {
-                "amount": 0.75,
-                "unit": "oz"
-            }
-        },
-        "serve": "shot"
-    },
     "Kamikaze": {
         "ingredients": {
             "vodka": {
@@ -414,14 +359,14 @@ def shakeDrink():
     GPIO.output(ENABLE_s,GPIO.LOW) # set enable to low, allow current to shaker
     GPIO.output(MODE_s, RESOLUTION['Half']) # make sure everything else changes 
     
-    shake_steps = round(200*0.41)*2 #164 half steps: doubled because of half step
+    shake_steps = round(200*0.28)*2 #112 half steps: doubled because of half step
     
     # initial shake since it starts at the top
     GPIO.output(DIR_s, CW) #sets rotations CW
     for x in range(1,int(shake_steps)):
         mod,rem = divmod(x,20) #every twenty steps increase speed
-        if mod>8:
-            mod=9-mod
+        if mod>3:
+            mod=7-mod
             
         delay = 0.01/((mod+1)) # should start slow and ramp up speed
         GPIO.output(STEP_s, GPIO.HIGH)
@@ -434,10 +379,10 @@ def shakeDrink():
     
     while shakes<9: #shake 10 times counting first and last moves
         GPIO.output(DIR_s, CCW) #sets rotations CW
-        for x in range(1,int(shake_steps*2)): #328 steps: goes from +108 to -108
+        for x in range(1,int(shake_steps*2)): #224 steps: goes from +100 to -100
             mod,rem = divmod(x,20)
-            if mod>8:
-                mod=17-mod
+            if mod>6:
+                mod=13-mod
                 
             delay = 0.01/((mod+1)) # should start slow and ramp up speed
             GPIO.output(STEP_s, GPIO.HIGH)
@@ -446,10 +391,10 @@ def shakeDrink():
             sleep(delay)
 
         GPIO.output(DIR_s, CW) #sets rotations CCW
-        for x in range(1,int(shake_steps*2)): #328 steps: goes from -108 to +108
+        for x in range(1,int(shake_steps*2)): #224 steps: goes from -100 to +100
             mod,rem = divmod(x,20)
-            if mod>8:
-                mod=17-mod
+            if mod>6:
+                mod=13-mod
                 
             delay = 0.01/((mod+1)) # should start slow and ramp up speed
             GPIO.output(STEP_s, GPIO.HIGH)
@@ -462,12 +407,8 @@ def shakeDrink():
     sleep(0.5)
     
     GPIO.output(DIR_s, CCW) #sets rotations CW
-    for x in range(1,int(shake_steps*2)): #328 steps: goes slower until it hits the zero switch
-        mod,rem = divmod(x,40)
-        if mod>4:
-            mod=9-mod
-            
-        delay = 0.01/((mod+1)) # should start slow and ramp up speed
+    for x in range(1,int(shake_steps*2)): #224 steps: goes slower until it hits the zero switch
+        delay = 0.005 # should start slow and ramp up speed
         GPIO.output(STEP_s, GPIO.HIGH)
         sleep(delay)
         GPIO.output(STEP_s, GPIO.LOW)
