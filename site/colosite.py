@@ -132,6 +132,7 @@ conv_dist = 0.0
 #----------------------Resetting mechanical components----------------------
 
 def reset_conveyor():
+    global conv_dist
     GPIO.output(ENABLE_c,GPIO.LOW) # set enable to low, allow current to conveyor
     conv_reset_steps = SPR*60 #doubled for half-step
     
