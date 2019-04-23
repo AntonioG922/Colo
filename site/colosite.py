@@ -264,6 +264,40 @@ drinkMap = {
             }
         },
         "serve": "shot"
+    },
+    "Sour Patch Kid": {
+        "ingredients": {
+            "lemon-juice": {
+                "amount": 1,
+                "unit": "oz"
+            },
+            "green-apple": {
+                "amount": 2,
+                "unit": "oz"
+            },
+            "berry-blue": {
+                "amount": 2,
+                "unit": "oz"
+            }
+        },
+        "serve": "shot"
+    },
+    "Colo Sunset": {
+        "ingredients": {
+            "lemon-juice": {
+                "amount": 1,
+                "unit": "oz"
+            },
+            "fruit-punch": {
+                "amount": 2,
+                "unit": "oz"
+            },
+            "tampico": {
+                "amount": 2,
+                "unit": "oz"
+            }
+        },
+        "serve": "shot"
     }
 }
 
@@ -277,11 +311,11 @@ unitMap = {
 # Map of ingredients to GPIO pins (vials)
 # Map below needs to be updated
 ingredientMap = {
-    "simple-syrup": 19,
-    "vodka": 11,
-    "lemon-juice": 13,
-    "gin": 6,
-    "soda water": 5,
+    "berry-blue": 19, #vial 2
+    "green-apple": 13, #vial 3
+    "lemon-juice": 5, #vial 4
+    "fruit-punch": 6, #vial 5
+    "tampico": 11, #vial 6
 }
 
 #-------------------------------Make Drink Function----------------------------------
@@ -429,8 +463,8 @@ def move_conveyor_shots():
     GPIO.output(DIR_c, CCW)
     delay = 0.005
 
-    disp_delay = 17.75*1.5/2 #how long to run a shot
-    first_disp = disp_delay + 10
+    disp_delay = 17.75*1.67/2 #how long to run a shot
+    first_disp = disp_delay + 5
     last_disp = disp_delay + 10
     
     move_conveyor(shot1_dist)
