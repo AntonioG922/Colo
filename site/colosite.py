@@ -411,6 +411,7 @@ def shakeDrink():
         sleep(delay)
         if(GPIO.input(LSwitch_s)): 
             shak_ang = 0 #zeroes the conveyor distance
+            break
             
 
     GPIO.output(DIR_s, CW) #sets rotations CCW
