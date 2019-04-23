@@ -15,7 +15,7 @@ def load_site():
 def make_drink(drink, strength):
     try:
         makeDrink(drink)
-        return
+        return True
     except KeyboardInterrupt:
         GPIO.cleanup()
 
